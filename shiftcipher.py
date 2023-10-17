@@ -22,26 +22,34 @@ def getKeyInput():
 
 def createDict():
   alphList = list(alphabet)
+  i = 0
+  cipherDict = {}
   for letter in alphList:
-    print(letter)
-
+    cipherDict[letter] = i
+    i += 1
+  print(cipherDict)
+  return cipherDict
 
 def shift(alphabetDict, shiftNum):
   for item in alphabetDict.keys():
     letter = alphabetDict[item]
     letter = (letter + shiftNum) % 26
     alphabetDict[item] = letter
-  print(alphabetDict)
+  #print(alphabetDict)
   return alphabetDict
 
 def encrypt(message, alphabetDict):
   msgList = list(message)
+  msg =''
   for letter in msgList:
     if letter in alphabetDict.keys():
-      letter = alphabetDict[letter]
+      msg += str(alphabetDict[letter]) + ' '
     
-  msg = msgList.join()
   return msg
 
 if __name__ == '__main__':
-  pass
+  msg = getMsgInput()
+  dictionary = createDict()
+  shiftedDictionary = shift(dictionary, getKeyInput())
+  encryptedMsg = encrypt(msg, shiftedDictionary)
+  print(encryptedMsg)
