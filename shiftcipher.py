@@ -22,7 +22,9 @@ def getKeyInput():
 
 def createDict():
   alphList = list(alphabet)
-  
+  for letter in alphList:
+    print(letter)
+
 
 def shift(alphabetDict, shiftNum):
   for item in alphabetDict.keys():
