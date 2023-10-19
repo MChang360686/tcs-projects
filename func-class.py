@@ -3,6 +3,9 @@
 # List of functions to show *what* functions can do
 # Additionally, a class to demonstrate creating objects
 
+class newClass():
+    num = 5
+
 def func():
     print("This is a function")
 
@@ -15,7 +18,7 @@ def iteration(num):
 
 def recursion(input):
     if input == 0:
-        print("base case")
+        print("base case" + input)
     else:
         print(input-1)
         return recursion(input - 1)
