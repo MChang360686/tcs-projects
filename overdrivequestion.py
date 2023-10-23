@@ -13,7 +13,7 @@ def sortSol(list):
         if list[i] == list[i-1]:
             return list[i]
         else:
-            return "No duplicates"
+            continue
 
 def dictSol(list):
     dictionary = {}
@@ -23,7 +23,8 @@ def dictSol(list):
         else:
             dictionary[item] = 'exists'
 
-
+print(sortSol(listOfNums))
+print(dictSol(listOfNums))
 
 
 
