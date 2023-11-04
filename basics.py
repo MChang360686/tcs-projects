@@ -3,7 +3,7 @@ import time
 # Practice if/else elif statements
 
 
-number = int(input("Please enter a number"))
+"""number = int(input("Please enter a number"))
 
 print(type(number))
 
@@ -32,9 +32,12 @@ for letter in name:
 for i in range(0, 5):
     print(i)
 
+
+
 list = ['Bob', 'Rob', 'Tob']
 for i in range(0, 3):
     print(list[i])
+
 
 for name in list:
     print(name)
@@ -45,9 +48,21 @@ for name in list:
 # Practice while loops
 # Like for loops but a a little different
 
+
+
 num = 0
-while num < 5:
+while num <= 5:
     print(num)
     num+=1
 
-# Review: Try making another list of items and modify those items using a while loop
+
+
+# Review: Try making another list of items and modify those item
+s using a while loop
+"""
+
+def add(a, b):
+    return a + b
+
+x = add(3, 4)
+print(x)
