@@ -1,5 +1,4 @@
 
-# 
 
 def printWord(word):
     print(word)
@@ -13,6 +12,10 @@ def recursivelyPrint(index):
     else:
         print(numbers[index])
         return recursivelyPrint(index + 1)
+    
+def iterativelyPrint(index):
+    for item in numbers:
+        print(item)
     
 #printWord("pain")
 
