@@ -9,3 +9,11 @@ document.getElementById("showpicture").addEventListener("click", function() {
     var image = document.getElementById("image");
     image.style.visilbility = "hidden";
 })
+
+function ifElse(variable) {
+    if (variable) {
+        alert("True");
+    } else {
+        alert("False");
+    }
+}
