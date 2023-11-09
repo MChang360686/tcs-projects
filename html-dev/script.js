@@ -3,17 +3,26 @@ function changeButtonColor() {
     document.getElementById('enterbutton').style.color = "blue";
 }
 
-document.getElementById("enterbutton").addEventListener("click", changeButtonColor);
+document.getElementById("enterbutton").addEventListener("click", switchCase(true));
 
-document.getElementById("showpicture").addEventListener("click", function() {
-    var image = document.getElementById("image");
-    image.style.visilbility = "hidden";
-})
 
 function ifElse(variable) {
     if (variable) {
         alert("True");
     } else {
         alert("False");
+    }
+}
+
+function switchCase(variable) {
+    switch (variable){
+        case true:
+            document.getElementById("text").innerHTML = "True";
+            break;
+        case false:
+            document.getElementById("text").innerHTML = "False";
+            break;
+        default:
+            document.getElementById("text").innerHTML = "Spaghetti";
     }
 }
