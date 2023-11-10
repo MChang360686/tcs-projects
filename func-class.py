@@ -32,6 +32,11 @@ def sum(*numbers):
         sum += num
     return sum
 
+def printWordList():
+    wordList = ["this", 'is', 'a', 'list']
+    for word in wordList:
+        print(word)
+
 numList = [1, 0, 4, 5, 7, 3, 9, 5, 6]
 
 stack = []
@@ -43,6 +48,8 @@ def pop():
     value = stack[0]
     stack.pop(0)
     return value
+
+printWordList()
 
 push(5)
 push(7)
