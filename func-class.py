@@ -41,12 +41,20 @@ def push(number):
 
 def pop():
     value = stack[0]
-    stack.pop()
+    stack.pop(0)
     return value
 
 push(5)
 push(7)
 push(8)
+
+print(stack)
+
+pop()
+
+print(stack)
+
+push(6)
 
 print(stack)
 
