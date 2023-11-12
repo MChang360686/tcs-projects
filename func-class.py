@@ -49,9 +49,9 @@ def pop():
     stack.pop(0)
     return value
 
-printWordList()
+#printWordList()
 
-push(5)
+"""push(5)
 push(7)
 push(8)
 
@@ -65,6 +65,37 @@ push(6)
 
 print(stack)
 
+
 pop()
 
 print(stack)
+"""
+
+numberList = []
+
+def enqueue(item):
+    numberList.append(item)
+
+def dequeue():
+    value = numberList[0]
+    numberList.pop(0)
+    return value
+
+def isEmpty():
+    if len(numberList) == 0:
+        return True
+    else:
+        False
+
+def size():
+    return len(numberList)
+
+enqueue(5)
+enqueue(6)
+enqueue(7)
+print(numberList)
+print(size)
+print(isEmpty())
+dequeue()
+print(numberList)
+
