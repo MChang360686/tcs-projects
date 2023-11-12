@@ -23,8 +23,13 @@ function d100() {
     return Math.floor(Math.random() * 100);
 }
 
-// Define character object
-let character = {type: "", }
+// Define character object to store data
+let character = {type: "", end: 0, str: 0, ag: 0, acc: 0, int: 0, per: 0, will: 0, app: 0, caste: "", skills: [], gear: [], equipment: [], readwrite: false, math: false, bounty: false, misc: ""}
+
+// Clear character object
+function clearCharacter() {
+
+}
 
 // Clear character sheets (div)
 function clearCharSheets() {
@@ -111,9 +116,41 @@ function beginnerTypes(d100) {
         case 68:
             break;
         case 69:
-        
-        
-
+        case 70:
+        case 71:
+        case 72:
+        case 73:
+        case 74:
+        case 75:
+        case 76:
+        case 77:
+        case 78:
+        case 79:
+        case 80:
+        case 81:
+        case 82:
+        case 83:
+        case 84:
+        case 85:
+        case 86:
+        case 87:
+            break;
+        case 88:
+        case 89:
+        case 90:
+        case 91:
+        case 92:
+        case 93:
+        case 94:
+        case 95:
+        case 96:
+        case 97:
+        case 98:
+            break;
+        case 99:
+        case 0:
+            break;
+        default:
     }
 }
 
@@ -126,8 +163,8 @@ function masterTypes(d100) {
 }
 
 // Roll for Character base stats
-function rollStats() {
-
+function rollStats(characterObj) {
+    var strength = d100;
 }
 
 
