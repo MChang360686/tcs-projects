@@ -498,8 +498,12 @@ function characterTypeBonus(characterObj) {
     }
 }
 
+// Get skill rolls based off of caste
 function skills(characterObj){
-
+    switch (characterObj["caste"]) {
+        case "slave labor":
+            break;
+    }
 }
 
 function rollCriminalSkills(d100) {
@@ -519,32 +523,32 @@ function rollMiscSkills(d100) {
 }
 
 function rollTechnicalSkill(d10){
-    var skill = "";
+    var techSkill = "";
     switch (d10) {
         case 1:
-            skill = "bio tech";
+            techSkill = "bio tech";
             break;
         case 2:
-            skill = "chemical tech";
+            techSkill = "chemical tech";
             break;
         case 3:
         case 4:
-            skill = "computer tech";
+            techSkill = "computer tech";
             break;
         case 5:
         case 6:
-            skill = "electrical tech";
+            techSkill = "electrical tech";
             break;
         case 7:
         case 8:
-            skill = "mechanical tech";
+            techSkill = "mechanical tech";
             break;
         case 9:
         case 10:
-            skill = "robotics tech";
+            techSkill = "robotics tech";
             break;
     }
-    return skill;
+    return techSkill;
 }
 
 // Add event listener for Generate button
