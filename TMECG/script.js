@@ -62,13 +62,14 @@ function getDifficulty() {
 function rollCharType(diff, d100, characterObj) {
     switch (diff) {
         case 1:
+            beginnerTypes(d100, characterObj);
             break;
         case 2:
             break;
         case 3:
             break;
         default:
-        
+            beginnerTypes(d100, characterObj);
     }
 
 }
@@ -188,9 +189,14 @@ function masterTypes(d100) {
 
 // Roll for Character base stats
 function rollStats(characterObj) {
-    characterObj["end"] = d100();
-    var strength = d100();
-    var agility = d100();
+    characterObj["end"] = getStats(d100());
+    characterObj["str"] = getStats(d100());
+    characterObj["ag"] = getStats(d100());
+    characterObj["acc"] = getStats(d100());
+    characterObj["int"] = getStats(d100());
+    characterObj["per"] = getStats(d100());
+    characterObj["will"] = getStats(d100());
+    characterObj["app"] = getStats(d100());
 }
 
 // What you roll is not necessarily what you get
@@ -282,15 +288,263 @@ function getStats(rollValue) {
         case 45:
             value = 28;
             break;
-        
+        case 46:
+        case 47:
+            value = 29;
+            break;
+        case 48:
+        case 49:
+            value = 30;
+            break;
+        case 50:
+        case 51:
+            value = 31;
+            break;
+        case 52:
+        case 53:
+            value = 32;
+            break;
+        case 54:
+        case 55:
+            value = 33;
+            break;
+        case 56:
+        case 57:
+            value = 34;
+            break;
+        case 58:
+        case 59:
+            value = 35;
+            break;
+        case 60:
+        case 61:
+            value = 36;
+            break;
+        case 62:
+        case 63:
+            value = 37;
+            break;
+        case 64:
+        case 65:
+            value = 38;
+            break;
+        case 66:
+        case 67:
+            value = 39;
+            break;
+        case 68:
+        case 69:
+            value = 40;
+            break;
+        case 70:
+        case 71:
+        case 72:
+        case 73:
+        case 74:
+        case 75:
+        case 76:
+        case 77:
+        case 78:
+        case 79:
+        case 80:
+        case 81:
+        case 82:
+        case 83:
+        case 84:
+        case 85:
+        case 86:
+        case 87:
+        case 88:
+        case 89:
+        case 90:
+            value = 40 + d20();
+            break;
+        case 91:
+        case 92:
+        case 93:
+        case 94:
+        case 95:
+        case 96:
+            value = 60 + d20();
+            break;
+        case 97:
+        case 98:
+        case 99:
+            value = 80 + d20();
+            break;
+        case 0:
+            value = 100 + d20();
+            break;
     }
     return value;
 }
 
 
 // Roll for Character caste
-function rollCaste(){
+function rollCaste(characterType, d100) {
+    var caste = "";
+    switch (characterType) {
+        case "pure stock":
+            caste = getPureStockCaste(d100);
+            break;
+        case "clone comfort":
+            caste = getCloneComfortCaste(d100);
+            break;
+        case "clone labor":
+            caste = getCloneLaborCaste(d100);
+            break;
+        case "clone military":
+            caste = getCloneMilitaryCaste(d100);
+            break;
+        case "bioreplica pleasure":
+            caste = getBioreplicaPleasureCaste(d100);
+            break;
+        case "bioreplica industrial":
+            caste = getBioreplicaIndustrialCaste(d100);
+            break;
+        case "bioreplica clerical":
+            caste = getBioreplicaClericalCaste(d100);
+            break;
+        case "bioreplica infiltration":
+            caste = getBioreplicaInfiltrationCaste(d100);
+            break;
+        case "bioreplica battle":
+            caste = getBioreplicaBattleCaste(d100)
+            break;
+        case "transhuman":
+            caste = getTranshumanCaste(d100);
+            break;
+        case "cyborg":
+            caste = getCyborgCaste(d100);
+            break;
+        case "ghost mutant":
+            caste = getGhostMutantCaste(d100);
+            break;
+        case "mild mutant":
+        case "typical mutant":
+        case "severe mutant":
+        case "freakish horror mutant":
+            caste = getMutantCaste(d100);
+            break;
+        case "bestial human":
+            caste = getBestialHumanCaste(d100);
+            break;
+    }
+    return caste;
+}
 
+function getPureStockCaste(d100) {
+    switch (d100) {
+
+    }
+}
+
+function getCloneComfortCaste(d100) {
+
+}
+
+function getCloneLaborCaste(d100) {
+
+}
+
+function getCloneMilitaryCaste(d100) {
+
+}
+
+function getBioreplicaPleasureCaste(d100) {
+
+}
+
+function getBioreplicaIndustrialCaste(d100) {
+
+}
+
+function getBioreplicaClericalCaste(d100) {
+
+}
+
+function getBioreplicaInfiltrationCaste(d100) {
+
+}
+
+function getBioreplicaBattleCaste(d100) {
+
+}
+
+function getTranshumanCaste(d100) {
+
+}
+
+function getCyborgCaste(d100) {
+
+}
+
+function getGhostMutantCaste(d100) {
+
+}
+
+function getMutantCaste(d100) {
+
+}
+
+function getBestialHumanCaste(d100) {
+
+}
+
+function characterTypeBonus(characterObj) {
+    var type = characterObj["type"];
+    switch (type) {
+
+    }
+}
+
+function skills(characterObj){
+
+}
+
+function rollCriminalSkills(d100) {
+    
+}
+
+function rollWarriorSkills(d100) {
+
+}
+
+function rollEducatedSkills(d100) {
+
+}
+
+function rollMiscSkills(d100) {
+
+}
+
+function rollTechnicalSkill(d10){
+    var skill = "";
+    switch (d10) {
+        case 1:
+            skill = "bio tech";
+            break;
+        case 2:
+            skill = "chemical tech";
+            break;
+        case 3:
+        case 4:
+            skill = "computer tech";
+            break;
+        case 5:
+        case 6:
+            skill = "electrical tech";
+            break;
+        case 7:
+        case 8:
+            skill = "mechanical tech";
+            break;
+        case 9:
+        case 10:
+            skill = "robotics tech";
+            break;
+    }
+    return skill;
 }
 
 // Add event listener for Generate button
