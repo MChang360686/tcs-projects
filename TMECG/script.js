@@ -31,6 +31,10 @@ function d100() {
     return Math.floor(Math.random() * 100);
 }
 
+function d1000() {
+    return Math.floor(Math.random() * 1000);
+}
+
 // Define character object to store data
 let character = {type: "", end: 0, str: 0, ag: 0, acc: 0, int: 0, per: 0, will: 0, app: 0, caste: "", skills: [], gear: [], equipment: [], readwrite: false, math: false, bounty: false, misc: ""};
 
@@ -435,7 +439,7 @@ function rollCaste(characterType, d100) {
 
 function getPureStockCaste(d100) {
     switch (d100) {
-
+        
     }
 }
 
