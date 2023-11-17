@@ -40,6 +40,11 @@ def drawShape(shape, color):
         for i in range(0, 3):
             t.forward(100)
             t.left(120)
+    elif shape == "pentagon":
+        t.color(color)
+        for i in range(0, 5):
+            t.forward(100)
+            t.left(72)
     else:
         print("I don't know that shape")
 
