@@ -3,8 +3,24 @@ function changeButtonColor() {
     document.getElementById('enterbutton').style.color = "blue";
 }
 
+function switchStatement(a) {
+    switch (a) {
+        case "1":
+            console.log("1");
+            break;
+        case "2":
+            console.log("2");
+            break;
+        case "3":
+            console.log("3");
+            break;
+        default:
+            console.log("IDK");
+    }
+}
+
 var inputValue = document.getElementById("numberbar");
-document.getElementById("enterbutton").addEventListener("click", switchCase(inputValue));
+document.getElementById("enterbutton").addEventListener("click", function () {switchStatement(inputValue)});
 
 
 function ifElse(variable) {
