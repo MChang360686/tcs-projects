@@ -43,6 +43,9 @@ def encryptMsg(msg):
 
 print(encryptMsg(input("Please enter a message")))
 
+def decryptMsg(msg):
+    pass
+
 
 endtime = time.time()
 

@@ -10,6 +10,9 @@ public class dynprog {
         // Memoization time
         for (int i = 0; i < weights.length; i++) {
             System.out.println(value[i]);
+            for (int j = 0; j < value.length; j++) {
+                System.out.println(weights[i]);
+            }
         }
 
     }
