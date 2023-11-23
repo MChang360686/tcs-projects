@@ -47,9 +47,24 @@ def encrypt(message, alphabetDict):
     
   return msg
 
+def decrypt(message, shiftNum):
+  msg = list(message)
+  plaintext = ''
+  for letter in msg:
+    if letter == ' ':
+      continue
+    else:
+      l = int(letter)
+      l -= shiftNum
+      plaintext += str(l)
+  return plaintext
+
+
 if __name__ == '__main__':
   msg = getMsgInput()
   dictionary = createDict()
   shiftedDictionary = shift(dictionary, getKeyInput())
   encryptedMsg = encrypt(msg, shiftedDictionary)
+  shiftNum = int(input("Please enter the shift number"))
   print(encryptedMsg)
+  print(decrypt(encryptedMsg, shiftNum))
