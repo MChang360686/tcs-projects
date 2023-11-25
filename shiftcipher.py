@@ -55,7 +55,9 @@ def decrypt(message, shiftNum):
       continue
     else:
       l = int(letter)
+      print(l)
       l -= shiftNum
+      print(l)
       plaintext += str(l)
   return plaintext
 
@@ -65,6 +67,6 @@ if __name__ == '__main__':
   dictionary = createDict()
   shiftedDictionary = shift(dictionary, getKeyInput())
   encryptedMsg = encrypt(msg, shiftedDictionary)
-  shiftNum = int(input("Please enter the shift number"))
   print(encryptedMsg)
+  shiftNum = int(input("Please enter the shift number"))
   print(decrypt(encryptedMsg, shiftNum))
