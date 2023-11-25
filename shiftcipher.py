@@ -48,17 +48,18 @@ def encrypt(message, alphabetDict):
   return msg
 
 def decrypt(message, shiftNum):
-  msg = list(message)
+  msg = message.split()
   plaintext = ''
   for letter in msg:
     if letter == ' ':
+      plaintext += ' '
       continue
     else:
       l = int(letter)
-      print(l)
+      #print(l)
       l -= shiftNum
-      print(l)
-      plaintext += str(l)
+      #print(l)
+      plaintext += (str(l) + ' ')
   return plaintext
 
 
