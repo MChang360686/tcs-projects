@@ -511,19 +511,31 @@ function skills(characterObj){
 }
 
 function rollCriminalSkills(d100) {
-    
+    switch (d100) {
+        default:
+            console.log("Pain");
+    }
 }
 
 function rollWarriorSkills(d100) {
-
+    switch (d100) {
+        default:
+            console.log("Pain");
+    }
 }
 
 function rollEducatedSkills(d100) {
-
+    switch (d100) {
+        default:
+            console.log("Pain");
+    }
 }
 
 function rollMiscSkills(d100) {
-
+    switch (d100) {
+        default:
+            console.log("Pain");
+    }
 }
 
 function rollTechnicalSkill(d10){
