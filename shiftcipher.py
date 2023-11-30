@@ -21,10 +21,9 @@ def getKeyInput():
   return userKey
 
 def createDict():
-  alphList = list(alphabet)
   i = 0
   cipherDict = {}
-  for letter in alphList:
+  for letter in alphabet:
     cipherDict[letter] = i
     i += 1
   print(cipherDict)
