@@ -15,4 +15,28 @@ function switchStatement(a) {
     }
 }
 
-switchStatement(1)
+//switchStatement(1)
+
+function addNums(a, b) {
+    console.log(a + b);
+}
+
+//arrow function
+let sum = (a, b)  => console.log(a + b);
+
+/*
+addNums(1, 2);
+sum(1, 2);
+*/
+
+const cars = ["acura", "toyota", "volkswagen"];
+
+function readCars(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        console.log(arr[i]);
+    }
+}
+
+readCars(cars);
+
+
