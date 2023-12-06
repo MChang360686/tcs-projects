@@ -10,7 +10,9 @@ function add() {
 }
 
 function sub() {
-
+    let equation = document.getElementById("codeInput").value;
+    document.getElementById("codeInput").value = equation + "-";
+    operator = '-';
 }
 
 function mult() {
@@ -32,11 +34,17 @@ function clear() {
     
 }
 
-function solve() {
-    document.getElementById("result").innerHTML = Number(num1) + Number(num2);
-    num1 = 0;
-    num2 = 0;
-    operator = '';
+function solve(operator) {
+    switch (operator) {
+        case '+':
+            document.getElementById("result").innerHTML = Number(num1) + Number(num2);
+        case '-':
+            document.getElementById("result").innerHTML = Number(num1) - Number(num2);
+        case '/':
+            document.getElementById("result").innerHTML = Number(num1) / Number(num2);
+        case '*':
+            document.getElementById("result").innerHTML = Number(num1) * Number(num2);
+    }
 }
 
 document.getElementById("add").addEventListener("click", function() {
@@ -44,8 +52,16 @@ document.getElementById("add").addEventListener("click", function() {
     clear();
 });
 
+document.getElementById("sub").addEventListener("click", function() {
+    sub();
+    clear();
+});
+
 document.getElementById("eq").addEventListener("click", function() {
     clear();
-    solve();
+    solve(operator);
+    num1 = 0;
+    num2 = 0;
+    operator = '';
 });
 
