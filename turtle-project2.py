@@ -1,6 +1,8 @@
 import turtle
 import random
 
+# get code from here https://realpython.com/beginners-guide-python-turtle/#final-project-the-python-turtle-race
+
 die = [1, 2, 3, 4, 5, 6]
 
 t1 = turtle.Turtle()
