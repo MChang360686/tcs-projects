@@ -7,6 +7,17 @@
 
 listOfNums = [1, 2, 7, 3, 4, 5, 6, 7]
 
+def solutionOne():
+    subList = []
+    for num in listOfNums:
+        for n in subList:
+            if (n == num):
+                return n
+            else:
+                continue
+        subList.append(num)
+        print(subList)
+
 def sortSol(list):
     list.sort()
     for i in range(0, len(list)):
