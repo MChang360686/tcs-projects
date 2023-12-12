@@ -11,11 +11,15 @@ function sub() {
 }
 
 function mult() {
-
+    let var1 = document.getElementById("codeInput").value;
+    let var2 = document.getElementById("codeInput2").value;
+    return Number(var1) * Number(var2);
 }
 
 function div() {
-
+    let var1 = document.getElementById("codeInput").value;
+    let var2 = document.getElementById("codeInput2").value;
+    return Number(var1) / Number(var2);
 }
 
 function percentage() {
@@ -51,8 +55,19 @@ document.getElementById("sub").addEventListener("click", function() {
 });
 
 document.getElementById("mult").addEventListener("click", function() {
-    
+    var result = mult();
+    console.log(result);
+    document.getElementById("result").innerHTML = result;
+    clear();
 });
+
+document.getElementById("div").addEventListener("click", function() {
+    var result = div();
+    console.log(result);
+    document.getElementById("result").innerHTML = result;
+    clear();
+});
+
 
 document.getElementById("percent").addEventListener("click", function() {
     var sum = percentage();
@@ -67,8 +82,3 @@ document.getElementById("fraction").addEventListener("click", function() {
     document.getElementById("result").innerHTML = sum;
     clear();
 });
-
-document.getElementById("div").addEventListener("click", function() {
-    
-});
-
