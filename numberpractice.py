@@ -2,23 +2,24 @@ import time
 
 starttime = time.time()
 
-name = 'robert'
+"""name = 'robert'
 
-"""for letter in name:
+for letter in name:
     print(letter)"""
 
-"""for i in range(0, 5):
+"""for i in range(5, 0, -1):
     print(i)"""
 
-num = 0
+"""num = 0
 while num <= 5:
     print(num)
-    num+=1
+    num+=1"""
 
-value = False
+"""value = False
 while value != True:
     print("Value is False")
-    value = True
+    value = True"""
+
 
 def printNum(num):
     print(num)
