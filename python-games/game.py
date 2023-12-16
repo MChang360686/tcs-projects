@@ -7,7 +7,7 @@ import random
 pygame.font.init()
 
 # Create window
-WIDTH, HEIGHT = 800, 800
+WIDTH, HEIGHT = 500, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
 
