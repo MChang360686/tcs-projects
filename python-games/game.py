@@ -11,6 +11,8 @@ WIDTH, HEIGHT = 800, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
 
+BG = pygame.transform.scale(pygame.image.load("bg.jpeg"), (WIDTH, HEIGHT))
+
 PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
 
@@ -22,7 +24,7 @@ STAR_VEL = 3
 FONT =  pygame.font.SysFont("Arial", 30)
 
 def createScene(player, elapsedTime, stars):
-    #WIN.blit(BG, (0, 0))
+    WIN.blit(BG, (0, 0))
 
     time_text = FONT.render(f"Time: {round(elapsedTime)}s", 1, "white")
     WIN.blit(time_text, (10, 10))
