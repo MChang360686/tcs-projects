@@ -45,5 +45,11 @@ function binSearch(num, array) {
     let index = array.length / 2;
     if (num == array[index]) {
         return num;
+    } else if (num == 1) {
+
+    } else if (num == 2) {
+
+    } else {
+        
     }
 }

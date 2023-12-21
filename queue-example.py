@@ -21,6 +21,3 @@ dequeue()
 print(list)
 peek()
 print(getLength())
-
-
-
