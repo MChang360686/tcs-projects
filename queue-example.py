@@ -1,23 +1,35 @@
-
-
 list = [1, 2, 3, 4, 5]
 
-def enqueue(value):
-    list.append(value)
+x = 5
 
-def dequeue():
-    list.pop(0)
+# For i in range loop
+"""for i in range(0, 5):
+    if (i > 0):
+        print(i)
+    elif (i <= 0):
+        print("less than or equal to 0")"""
 
-def getLength():
-    return len(list)
+"""# For each loop
+for num in x:
+    print(num)"""
 
-def peek():
-    print(list[0])
+try:
+    for num in x:
+        print(num)
+except:                            
+    print("Houston, we have a problem")
 
-print(list)
-enqueue(32)
-print(list)
-dequeue()
-print(list)
-peek()
-print(getLength())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
