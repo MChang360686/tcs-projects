@@ -58,6 +58,8 @@ def decrypt(message, shiftNum):
       #print(l)
       l -= shiftNum
       #print(l)
+      if (l < 0):
+        l+=25
       plaintext += (str(l) + ' ')
   return plaintext
 
