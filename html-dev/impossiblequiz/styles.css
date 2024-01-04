@@ -2,6 +2,10 @@ h3 {
     display: inline;
 }
 
+#gameover {
+    display: none;
+}
+
 #q2 {
     display: none;
 }

@@ -1,19 +1,3 @@
-let lives = 3;
-
-function reduceLives() {
-    return lives - 1;
-}
-
-function checkGameOver(num) {
-    console.log(num)
-    if (num == 0) {
-        return true;
-    } else {
-        document.getElementById("lives").innerHTML = num.toString();
-        console.log(typeof num.toString());
-        return false;
-    }
-}
 
 document.getElementById("helpbutton").addEventListener('click', function () {
     var h = document.getElementById("help");
@@ -24,13 +8,22 @@ document.getElementById("helpbutton").addEventListener('click', function () {
     }
 });
 
-document.getElementById("q1b1").addEventListener('click', function () {
-    let gameover = checkGameOver(reduceLives());
-    if (gameover == true) {
-        console.log("Game Over");
+document.getElementById("reset").addEventListener('click', function () {
+    var game = document.getElementById("gameover");
+    var q1 = document.getElementById("q1");
+    if (game.style.display === 'none') {
+        game.style.display = 'block';
     } else {
-        document.getElementById("lives").innerHTML = toString(lives);
+        game.style.display = 'none';
+        q1.style.display = 'block';
     }
+    
+});
+
+document.getElementById("q1b1").addEventListener('click', function () {
+    var q1 = document.getElementById("")
+    var g = document.getElementById("gameover");
+    g.style.display = 'block'
 });
 
 document.getElementById("q1b2").addEventListener('click', function () {
