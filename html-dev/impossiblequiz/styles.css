@@ -6,6 +6,18 @@ h3 {
     display: none;
 }
 
+#help {
+    display: none;
+}
+
 #q2 {
+    display: none;
+}
+
+#q3 {
+    display: none;
+}
+
+#win {
     display: none;
 }
