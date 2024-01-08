@@ -34,6 +34,7 @@ def dictSol(list):
         else:
             dictionary[item] = 'exists'
 
+print(solutionOne())
 print(sortSol(listOfNums))
 print(dictSol(listOfNums))
 
