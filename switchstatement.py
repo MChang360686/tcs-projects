@@ -4,6 +4,7 @@ import random
 
 num = random.choice([1, 2, 3, 4, 5, 6, 7, 8])
 
+# Needs time to be compared to if-else statements.
 match num:
     case 1: 
         print(num)
