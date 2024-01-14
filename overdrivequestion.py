@@ -1,15 +1,18 @@
+import time
 
 # How do we find a duplicate number in a list of n numbers?
+# Assume there IS a duplicate
 
-# 1) we can sort the array and then find the duplicate
-# 2) we can put the 
-# 3) naive we can keep a running list of every number we've encountered and list it
+# 1) naive we can keep a running list of every number we've encountered and list it
+# 2) we can sort the array and then find the duplicate
+# 3) we can put the list into a hashtable/dictionary's keys
 
 listOfNums = [1, 2, 7, 3, 4, 5, 6, 7]
 
-def solutionOne():
+# O(n^2) with n-1 auxillary space
+def solutionOne(list):
     subList = []
-    for num in listOfNums:
+    for num in list:
         for n in subList:
             if (n == num):
                 return n
@@ -18,6 +21,7 @@ def solutionOne():
         subList.append(num)
         print(subList)
 
+# O(nlogn + n) with O(n) temp space
 def sortSol(list):
     list.sort()
     for i in range(0, len(list)):
@@ -26,6 +30,7 @@ def sortSol(list):
         else:
             continue
 
+# O(n) with O(n) auxillary space
 def dictSol(list):
     dictionary = {}
     for item in list:
@@ -34,7 +39,7 @@ def dictSol(list):
         else:
             dictionary[item] = 'exists'
 
-print(solutionOne())
+print(solutionOne(listOfNums))
 print(sortSol(listOfNums))
 print(dictSol(listOfNums))
 
