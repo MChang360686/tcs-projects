@@ -36,32 +36,33 @@ def encryptMsg(msg):
             case _:
                 newChar = cipher[character]
             
-        encryptedMsg += f' {str(newChar)}'
+        encryptedMsg += f' {newChar}'
     
     return encryptedMsg
 
-msg = encryptMsg(input("Please enter a message"))
+def decryptMsg(encrMsg):
+    ctp = {}
+    plaintxt = ''
+    shift = int(input("Please enter shift num"))
 
+    for i in range(0, 26):
+        ctp[i] = letters[i]
+
+    eMsg = encrMsg.split()
+
+    for char in eMsg:
+        if int(char) in ctp.keys():
+            plaintxt += (ctp[int(char)] - shift)
+        else:
+            continue
+
+    return plaintxt
+
+
+msg = encryptMsg(input("Please enter a message"))
 print(msg)
 
-def decryptMsg(msg):
-    decryptedStr = ''
-
-    for key in cipher.keys(): 
-        num = (cipher[key] - shiftNum)
-        if num < 0:
-            num += 26
-        cipher[key] = num
-
-    for letter in msg:
-        value = cipher[letter]
-        decryptedStr.append(str(value))
-
-    return decryptedStr
-
-
 print(decryptMsg(msg))
-
 
 
 
