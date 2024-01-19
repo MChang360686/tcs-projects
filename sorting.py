@@ -6,7 +6,7 @@ numbers = []
 Makes a list of pre-determined size of "random" floats
 """
 def make_num_list(length):
-    for i in range(0, length):
+    for i in range(length):
         num = random.random()
         numbers.append(num)
 
