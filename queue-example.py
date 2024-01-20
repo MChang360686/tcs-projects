@@ -2,25 +2,23 @@ list = [1, 2, 3, 4, 5]
 
 x = 5
 
-# For i in range loop
-"""for i in range(0, 5):
-    if (i > 0):
-        print(i)
-    elif (i <= 0):
-        print("less than or equal to 0")"""
+def enqueue(list, item):
+    list.append(item)
 
-"""# For each loop
-for num in x:
-    print(num)"""
+def dequeue(list):
+    list.pop(0)
 
-try:
-    for num in x:
-        print(num)
-except:                            
-    print("Houston, we have a problem")
+def is_empty(list):
+    if len(list) == 0:
+        return True
+    else:
+        return False
+    
+def peek(list):
+    return list[0]
 
 
-
+print(peek(list))
 
 
 
