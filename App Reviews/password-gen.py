@@ -1,7 +1,6 @@
-import os
 import random
 
-letters = []
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '?']
 chars = ['l', 'n', 's']
@@ -12,15 +11,15 @@ class Password:
 
     def generate(self):
         word = ''
-        for i in range(0, self.length):
-            char = chars.choice()
+        for i in range(self.length):
+            char = random.choice(chars)
             match char:
                 case 'l':
-                    word += letters.choice()
+                    word += random.choice(letters)
                 case 'n':
-                    word += str(numbers.choice())
+                    word += str(random.choice(numbers))
                 case 's':
-                    word += symbols.choice()
+                    word += random.choice(symbols)
 
         return word
 
