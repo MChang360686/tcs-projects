@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Word Scrubber",
+    "version": "1.0",
+    "description": "Uses Regex to scrub sensitive info from given text.",
+    "permissions": [
+      "activeTab"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "icons": {
+      
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+  }
