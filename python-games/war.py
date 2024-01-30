@@ -4,6 +4,8 @@ suits = ['hearts', 'spades', 'diamonds', 'clubs']
 
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace']
 
+cards = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'jack': 11, 'queen': 12, 'king': 13, 'ace': 14}
+
 score_1 = 0
 score_2 = 0
 
@@ -17,7 +19,6 @@ while True:
     c2 = random.choice(suits) + ' ' + card_2
 
     input(f"CPU drew {c1}")
-
     input(f"{player} drew {c2}")
 
     if card_1 > card_2:
