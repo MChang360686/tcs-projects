@@ -2,6 +2,9 @@ import time
 
 # Practice if/else elif statements
 
+x = 5
+print(x)
+
 
 """number = int(input("Please enter a number"))
 
@@ -61,8 +64,8 @@ while num <= 5:
 s using a while loop
 """
 
-def add(a, b):
+"""def add(a, b):
     return a + b
 
 x = add(3, 4)
-print(x)
+print(x)"""
