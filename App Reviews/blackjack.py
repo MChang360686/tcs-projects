@@ -9,6 +9,38 @@ class Card:
         self.suit = suit
         self.value = value
 
+"""
+Store win inside of an object.  Change and view scores using getters and setters.
+"""
+class Win:
+    def __init__(self, dealer_score, player_score, win) -> None:
+        self.dealer_score = dealer_score
+        self.player_score = player_score
+        self.win = win
+
+    def get_dealer_score(self):
+        return self.dealer_score
+    
+    def set_dealer_score(self, score):
+        self.dealer_score = score
+
+    def get_player_score(self):
+        return self.player_score
+    
+    def set_player_score(self, score):
+        self.player_score = score
+
+    def get_win(self):
+        return self.win
+    
+    def set_win(self):
+        if self.win == False:
+            self.win = True
+        else:
+            self.win = False
+
+    
+
 score_player = 0
 
 card = Card(random.choice(suits), random.choice(values))
@@ -63,8 +95,10 @@ def check_blackjack(score):
         print("Not Quite...")
     elif score == 21:
         print("Blackjack!!!")
-    else:
+    elif score > 21:
         print("Bust")
+    else:
+        pass
 
 def play_again():
     response = input("Would you like to play again? (y/n) ")
@@ -76,8 +110,31 @@ def play_again():
         print("I don't know what that command means ")
         return False
     
-score_player = sum_cards(card, card_2)
+def dealer(dealer_total):
+    if dealer_total < 21:
+        if dealer_total >= 17:
+            print("dealer stands on 17")
+    elif dealer_total == 21:
+        pass
+    elif dealer_total > 21:
+        print("dealer bust")
+
+def check_win(dealer_score, player_score):
+    if dealer_score > player_score:
+        print("Dealer wins")
+    elif player_score > dealer:
+        print("YOU WIN!!!")
+    else:
+        print("Tie")
+    
+score_player = sum_cards(card.value, card_2.value)
 print(score_player)
+
+c, c2 = Card(random.choice(suits), random.choice(values)), Card(random.choice(suits), random.choice(values))
+dealer_total = sum_cards(c, c2)
+print(dealer_total)
+
+w = Win(score_player, dealer_total, False)
 
 while play:
 
@@ -87,6 +144,7 @@ while play:
         score_player = hit(Card(random.choice(suits), random.choice(values)))
         print(score_player)
         check_blackjack(score_player)
+        check_win(dealer_total, score_player)
     elif player_turn == 's':
         play = play_again()
     else:
