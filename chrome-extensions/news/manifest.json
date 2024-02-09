@@ -1,0 +1,11 @@
+{
+    "name": "News API widget",
+    "version": "1.0.0",
+    "description": "grabs local news",
+    "manifest_version": 3,
+    "author": "Matthew",
+    "action":{
+        "default_popup": "index.html",
+        "default_title": "Latest News"
+    }
+}
