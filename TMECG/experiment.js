@@ -28,6 +28,10 @@ function d100() {
     return Math.floor(Math.random() * 100) + 1;
 }
 
+function d10() {
+    return Math.floor(Math.random() * 10) + 1;
+}
+
 // List of "bucket" numbers
 let arr = [9, 20, 32, 36, 44, 52, 59, 71, 79, 89, 102]
 

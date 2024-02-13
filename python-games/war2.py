@@ -76,9 +76,7 @@ while True:
     if player_score >= 52 or cpu_score >= 52:
         if player_score == 52:
             print("Player wins")
-            False
             break
         elif cpu_score == 52:
-            print("CPU wins")
-            False
+            print("CPU wins")   
             break
