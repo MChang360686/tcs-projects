@@ -1,5 +1,5 @@
 {
-    "name": "News API widget",
+    "name": "API widget",
     "version": "1.0.0",
     "description": "grabs local news",
     "manifest_version": 3,

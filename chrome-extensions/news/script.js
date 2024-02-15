@@ -1,9 +1,9 @@
 async function getFruit() {
-    const res=await fetch ("https://api.wheretheiss.at/v1/satellites/25544");
-    const record=await res.json();
-    console.log(record);
-    document.getElementById("date").innerHTML=record.id;
-    document.getElementById("articleTitle").innerHTML=setup;
-    document.getElementById("author").innerHTML=record.punchline;
-    document.getElementById("link").innerHTML=record[0];
+    const res = await fetch ("http://127.0.0.1:5000/people");
+    const record = await res.json();
+    const p = record[0];
+    document.getElementById("id").innerHTML = p.id;
+    document.getElementById("name").innerHTML = p.name;
+    document.getElementById("age").innerHTML = p.age;
+    document.getElementById("link").innerHTML = record[0];
 }
