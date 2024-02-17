@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class budget-tracker {
 
     /*
@@ -15,7 +17,12 @@ public class budget-tracker {
      * 
      */
 
-    public static void main(String []args) {
+    // Write a function to read a CSV
 
+    // Write a function to write to a CSV
+
+    public static void main(String []args) {
+        Scanner scan = new Scanner(System.in);
     }
 }
+    
