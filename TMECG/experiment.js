@@ -11,12 +11,11 @@ that marks the boundary between one bucket and the other.  IF the generated numb
 belongs in this group of numbers, then it should be immediately clear which bucket
 this number belongs to.  If it does not, then we proceed to the next stage  
 
-The next stage consists of using a binary search to determine what bucket a number belongs in.  
-If the number is less than the bucket value at the centerpoint, we make a new centerpoint and
-compare the bucket value at that centerpoint.
-
-THEN once we figure out what bucket an item is contained in, we can use a switch case on either a string
-or number to assign a specific value
+The next stage consists of using a pseudorandom weighted choice algorithm to choose
+from a list of values.  The weight of an item depends on the range of the bucket
+and what percent the range of the item constitutes of the bucket.  Therefore if
+the first bucket is 253, and the first item is 1-9, the weight for the first
+item would be 9/253 or 0.04.
 */
 
 // Returns a pseudorandom number from 1 - 1000
@@ -34,6 +33,10 @@ function d10() {
 
 // List of "bucket" numbers
 let arr = [9, 20, 32, 36, 44, 52, 59, 71, 79, 89, 102]
+
+let b1 = [253, 511, 754, 1000]
+let b2 = [1, 2 , 3, 4, 5, 6, 7, 8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+let b2Weights = [.04, .04, .04, .01]
 
 // switch case
 function check(array, num) {
