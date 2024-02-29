@@ -45,7 +45,11 @@ function clearCharacter() {
 
 // Clear character sheets (div)
 function clearCharSheets() {
+    let d = "div"
 
+    for (let i = 1; i <= 10; i++) {
+        document.getElementById(d+toString(i)).innerHTML = '';
+    }
 }
 
 // Select difficulty from dropdown

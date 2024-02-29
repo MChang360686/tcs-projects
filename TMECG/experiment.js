@@ -16,6 +16,8 @@ from a list of values.  The weight of an item depends on the range of the bucket
 and what percent the range of the item constitutes of the bucket.  Therefore if
 the first bucket is 253, and the first item is 1-9, the weight for the first
 item would be 9/253 or 0.04.
+
+Heavily inspired by https://dev.to/trekhleb/weighted-random-algorithm-in-javascript-1pdc
 */
 
 // Returns a pseudorandom number from 1 - 1000
@@ -34,29 +36,55 @@ function d10() {
 // List of "bucket" numbers
 let arr = [9, 20, 32, 36, 44, 52, 59, 71, 79, 89, 102]
 
-let b1 = [253, 511, 754, 1000]
-let b2 = [1, 2 , 3, 4, 5, 6, 7, 8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-let b2Weights = [.04, .04, .04, .01]
+let buckets = [253, 511, 754, 1000]
+let b1 = [1, 2 , 3, 4, 5, 6, 7, 8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+let b1Weights = [.04, .04, .04, .01]
+let b2 = [24, 44]
+let b2Weights = []
+let b3 = [45, 63]
+let b3Weights = []
+let b4 = [64, 91]
+let b4Weights = []
 
-// switch case
-function check(array, num) {
-    for(let i = 0; i < array.length; i++) {
-        if (num == array[i]) {
-            return num;
+// choose random num and find which bucket it belongs to
+function check(num, buckets) {
+    let arr = 0;
+
+    for(let i = 0; i < buckets.length; i++) {
+        if (num <= buckets[i]) {
+            arr = num;
         }
     }
-}
 
-// binary search function
-function binSearch(num, array) {
-    let index = array.length / 2;
-    if (num == array[index]) {
-        return num;
-    } else if (num == 1) {
+    if (arr == 253){
+        //use b1
+    } else if (arr == 511) {
 
-    } else if (num == 2) {
+    } else if (arr == 754) {
 
     } else {
-        
+
     }
+
 }
+
+
+function checkB1(bucketOne, bOneWeights) {
+
+}
+
+function checkB2() {
+    
+}
+
+
+function checkB3() {
+    
+}
+
+
+function checkB4() {
+    
+}
+
+
