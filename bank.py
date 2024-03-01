@@ -1,5 +1,3 @@
-
-
 accounts = {}
 
 def create_account(name, money):
