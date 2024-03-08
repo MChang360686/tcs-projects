@@ -60,6 +60,8 @@ public class budgetTracker {
                 // Code goes here
                 //System.out.println(line);
                 String[] temp = line.split(",");
+                hoursWorked = incrementHours(temp, hoursWorked);
+                salary = incrementSalary(temp, salary);
 
             }
 
