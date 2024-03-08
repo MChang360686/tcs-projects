@@ -26,6 +26,26 @@ public class budgetTracker {
 
     // Write a function to write to a CSV
 
+    // Print an array
+    public static void printArr(String[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+    }
+
+    // return hours worked
+    public static Integer incrementHours(String[] arr, Integer i) {
+        Integer increment = (Integer) arr[1];
+        return i + increment;
+
+    }
+
+    // return amount paid
+    public static Integer incrementSalary(String[] arr, Integer i) {
+        Integer payIncrement = (Integer) arr[2];
+        return i + payIncrement;
+    }
+
     public static void main(String []args) throws IOException {
         Scanner scan = new Scanner(System.in);
 
@@ -35,8 +55,12 @@ public class budgetTracker {
         try {
             BufferedReader br = new BufferedReader(new FileReader("data - Sheet1.csv"));
             String line = "";
+            Integer hoursWorked, salary = 0;
             while((line = br.readLine()) != null) {
-                System.out.println(line);
+                // Code goes here
+                //System.out.println(line);
+                String[] temp = line.split(",");
+
             }
 
         } catch (FileNotFoundException e) {
