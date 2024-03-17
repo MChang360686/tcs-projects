@@ -24,6 +24,9 @@ class Stack:
     def pop(self):
         self.stack.pop(0)
 
+s = Stack()
+s.push(5)
+print(s.stack)
 
 def balanced_parentheses(string):
     s = Stack()
