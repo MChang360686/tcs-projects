@@ -14,3 +14,12 @@ class Queue:
     
     def rear(self):
         return self.queue[len(self.queue) - 1]
+    
+q = Queue()
+
+
+q.enqueue(3)
+q.enqueue(5)
+q.enqueue(3)
+q.dequeue()
+print(q.queue)

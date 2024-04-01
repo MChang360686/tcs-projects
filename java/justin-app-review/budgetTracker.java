@@ -4,25 +4,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.ArrayList;
 
 public class budgetTracker {
 
     /*
      * Take input
      * 
-     * Track how much money you spent
      * 
      * Track how much money you have saved
      * 
-     * Use Person class to store the data for each person
-     *  Write constructors and methods.
-     * 
-     * https://www.baeldung.com/java-csv
-     * https://bootcamp.cvn.columbia.edu/blog/java-projects-for-beginners-to-gain-skills/
      * 
      */
-
-    // Write a function to read a CSV
 
     // Write a function to write to a CSV
 
@@ -35,16 +32,17 @@ public class budgetTracker {
 
     // return hours worked
     public static Integer incrementHours(String[] arr, Integer i) {
-        Integer increment = (Integer) arr[1];
+        Integer increment = Integer.parseInt(arr[1]);
         return i + increment;
 
     }
 
     // return amount paid
     public static Integer incrementSalary(String[] arr, Integer i) {
-        Integer payIncrement = (Integer) arr[2];
+        Integer payIncrement = Integer.parseInt(arr[2]);
         return i + payIncrement;
     }
+
 
     public static void main(String []args) throws IOException {
         Scanner scan = new Scanner(System.in);
@@ -55,15 +53,23 @@ public class budgetTracker {
         try {
             BufferedReader br = new BufferedReader(new FileReader("data - Sheet1.csv"));
             String line = "";
-            Integer hoursWorked, salary = 0;
+            Integer hoursWorked = 0, salary = 0;
+            ArrayList l = new ArrayList<Integer>();
+            br.readLine();
             while((line = br.readLine()) != null) {
                 // Code goes here
                 //System.out.println(line);
                 String[] temp = line.split(",");
                 hoursWorked = incrementHours(temp, hoursWorked);
                 salary = incrementSalary(temp, salary);
-
             }
+
+            Date today = java.time.LocalDate.now();
+            l.add(new String[] {hoursWorked, salary, today});
+
+            createCSV();
+
+            
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
