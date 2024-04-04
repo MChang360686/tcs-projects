@@ -3,12 +3,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.ArrayList;
 
 public class budgetTracker {
 
@@ -45,7 +43,6 @@ public class budgetTracker {
 
 
     public static void main(String []args) throws IOException {
-        Scanner scan = new Scanner(System.in);
 
         File f = new File("data.csv");
         System.out.println(f.getCanonicalPath());
@@ -54,7 +51,7 @@ public class budgetTracker {
             BufferedReader br = new BufferedReader(new FileReader("data - Sheet1.csv"));
             String line = "";
             Integer hoursWorked = 0, salary = 0;
-            ArrayList l = new ArrayList<Integer>();
+            
             br.readLine();
             while((line = br.readLine()) != null) {
                 // Code goes here
@@ -64,10 +61,31 @@ public class budgetTracker {
                 salary = incrementSalary(temp, salary);
             }
 
-            Date today = java.time.LocalDate.now();
-            l.add(new String[] {hoursWorked, salary, today});
+            String h = Integer.toString(hoursWorked);
+            String s = Integer.toString(salary);
 
-            createCSV();
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+            String today = sdf.format(date);
+
+
+            try {
+                File output = new File("output.csv");
+
+                if(output.createNewFile()) {
+                    System.out.println("Created output.csv");
+                } else {
+                    System.out.println("output.csv already exists");
+                }
+
+                FileWriter fw = new FileWriter("output.csv");
+                fw.write(h + ',' + s + ',' + today);
+                fw.close();
+            } catch (IOException ioException) {
+                System.out.println("ioexception caught ");
+                ioException.printStackTrace();
+            }
+
 
             
 
