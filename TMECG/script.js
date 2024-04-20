@@ -188,11 +188,17 @@ function beginnerTypes(d100, characterObj) {
 }
 
 function experiencedTypes(d100) {
-
+    switch (d100) {
+        default:
+            console.log("PAIN");
+    }
 }
 
 function masterTypes(d100) {
-
+    switch (d100) {
+        default:
+            console.log("PAIN");
+    }
 }
 
 // Roll for Character base stats

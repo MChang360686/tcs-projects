@@ -9,7 +9,7 @@ shape = input("Please enter a shape name")
 color =  input("Please enter a color")
 size = int(input("Please enter a number of pixels"))
 
-def drawShape(shape, color, size):
+def draw_shape(shape, color, size):
     if shape == "circle":
         t.color(color)
         t.circle(size)
@@ -32,5 +32,5 @@ def drawShape(shape, color, size):
         print("I don't know that shape")
 
 
-drawShape(shape, color, size)
+draw_shape(shape, color, size)
 t.screen.mainloop()

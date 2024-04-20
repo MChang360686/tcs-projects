@@ -19,27 +19,34 @@ def craps():
     d = Dice()
     point = ''
 
-    while game:
-        bet = input("Please place a bet ")
+    bet = input("Please place a bet ")
 
+
+    while game:
         d.roll()
         dice_total = d.d1 + d.d2
+
+        print(dice_total)
 
         if round_num == 1:
             if bet == 'pass':
                 match(dice_total):
                     case 2 | 3 | 12:
                         print("You Lose")
+                        break
                     case 7 | 11:
                         print("You Win")
+                        break
                     case _:
                         point = dice_total
             elif bet == "don't pass":
                 match(dice_total):
                     case 7 | 11:
                         print("You Lose")
+                        break
                     case 2 | 3 | 12:
                         print("You Win")
+                        break
                     case _:
                         point = dice_total
             else:
@@ -52,11 +59,17 @@ def craps():
             match(dice_total):
                 case 2 | 3 | 12:
                     print("Don't Come bets win")
+                    break
                 case 11:
                     print("Come bets win")
+                    break
                 case 7:
                     if dice_total == point:
                         print("Come bets win")
+                        break
                     else:
                         print("Don't Come bets win")
+                        break
                 
+
+craps()

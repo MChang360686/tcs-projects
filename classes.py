@@ -38,14 +38,6 @@ class Person():
         self.haircolor = new_hairdo
 
 
-matthew = Person("5'9", 135, "black")
-print(matthew.get_height())
-matthew.set_height("6'2")
-print(matthew.get_height())
-matthew.get_haircut("Bald")
-print(matthew.haircolor)
-
-jack = Person("7'5", 101, "brown")
-print(jack.height, jack.weight, jack.haircolor)
-
-
+alice = Person("5'9", 'x', 'brown')
+alice.set_height("6'0")
+print(alice.get_height())

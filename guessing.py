@@ -39,4 +39,4 @@ def play():
             print("Not Quite...")
 
 if __name__ == '__main__':
-    pass
+    play()
