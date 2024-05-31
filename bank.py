@@ -49,6 +49,8 @@ def run():
                 print(check_money(name))
             case "h":
                 help()
+            case _:
+                print("Invalid command")
 
 if __name__ == '__main__':
     # This is the main method, our code starts here.
