@@ -31,6 +31,5 @@ def draw_shape(shape, color, size):
     else:
         print("I don't know that shape")
 
-
 draw_shape(shape, color, size)
 t.screen.mainloop()
