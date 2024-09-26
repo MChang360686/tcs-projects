@@ -1,12 +1,3 @@
-import time
-
-# How do we find a duplicate number in a list of n numbers?
-# Assume there IS a duplicate
-
-# 1) naive we can keep a running list of every number we've encountered and list it
-# 2) we can sort the array and then find the duplicate
-# 3) we can put the list into a hashtable/dictionary's keys
-
 listOfNums = [1, 2, 7, 3, 4, 5, 6, 7]
 
 # O(n^2) with n-1 auxillary space

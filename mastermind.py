@@ -10,7 +10,7 @@ def opp_num():
     for i in range(0, 4):
         num.append(get_random(nums))
     return num
-
+ 
 def game():
     round = 1
     hidden_number = opp_num()

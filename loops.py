@@ -13,3 +13,14 @@ def print_cars(list):
         print(item)
 
 print_cars(cars)
+
+def a():
+    x = 5
+    return x
+
+def b():
+    y = x + 7
+    return y
+
+print(b())
+
