@@ -10,14 +10,14 @@ def make_num_list(length):
         num = random.random()
         numbers.append(num)
 
-"""
+"""zx
 Finds smallest element and brings it to the first position
 """
 def select_sort(list):
     for i in range(len(list)):
         smallest = i
         for j in range(i+1, len(list)):
-            if list[j] < list[i]:
+            if list[j] < list[smallest]:
                 smallest = j
         list[i], list[smallest] = list[smallest], list[i]
 
@@ -38,9 +38,9 @@ def insert_sort(list):
     print(list)
 
 
-if __name__ == '__main__':
-    make_num_list(5)
-    print(numbers)
-    #select_sort(numbers)
-    insert_sort(numbers)
+
+make_num_list(5)
+print(numbers)
+select_sort(numbers)
+insert_sort(numbers)
     

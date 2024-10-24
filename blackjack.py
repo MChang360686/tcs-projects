@@ -45,7 +45,7 @@ def game():
                 else:
                     print(f'Player has: {sum_cards(player_hand)}')
             elif player_action == 'stay':
-                continue
+                pass
             else:
                 print("I don't understand that command")
 
@@ -58,7 +58,7 @@ def game():
                     break
                 else:
                     print(f'Dealer has: {sum_cards(dealer_hand)}')
-
+           
 game()
 '''print(deal_card())
 print(cards[deal_card()])'''

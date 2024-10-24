@@ -1,6 +1,7 @@
 import random
 
 d6 = [1, 2, 3, 4, 5, 6]
+d10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 events = []
 
 class Party:
@@ -36,6 +37,8 @@ class Party:
 def roll_d6():
     return random.choice(d6)
 
+def roll_d10():
+    return random.choice(d10)
 
 def choose_background(party_obj):
     print("bucolic, baker, banker, blacksmith")
@@ -52,8 +55,31 @@ def choose_background(party_obj):
 
 
 def event():
-    pass
+    d10 = roll_d10()
 
+    match(d10):
+        case 1:
+            print("a wild animal appears")
+        case 2:
+            print("a wild animal appears")
+        case 3:
+            print("a wild animal appears")
+        case 4:
+            print("a wild animal appears")
+        case 5:
+            print("a wild animal appears")
+        case 6:
+            print("a wild animal appears")
+        case 7:
+            print("a wild animal appears")
+        case 8:
+            print("a wild animal appears")
+        case 9:
+            print("a wild animal appears")
+        case 10:
+            print("a wild animal appears")
+        case _:
+            print("a wild animal appears")
 
 def game():
     pass
