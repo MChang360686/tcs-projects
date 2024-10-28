@@ -16,20 +16,18 @@ t2.penup()
 t2.goto(-200, -100)
 
 
-t1.goto(300,60)
+t1.goto(300, 60)
 t1.pendown()
 t1.circle(40)
 t1.penup()
-t1.goto(-200,100)
+t1.goto(-200, 100)
 
-t2.goto(300,-140)
+t2.goto(300, -140)
 t2.pendown()
 t2.circle(40)
 t2.penup()
-t2.goto(-200,-100)
+t2.goto(-200, -100)
 
-
-die = [1,2,3,4,5,6]
 
 for i in range(20):
     if t1.pos() >= (300,100):
