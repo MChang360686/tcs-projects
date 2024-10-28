@@ -41,7 +41,8 @@ def game():
         b = int(input("Enter column: "))
         move(a, b, 'X')
         win = check_winner()
-        if win != False:
+        if win:
+            print(f'{win} wins')
             break
         else:
             move(random.randint(0, 2), random.randint(0, 2), 'O')
