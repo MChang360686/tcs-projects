@@ -42,6 +42,7 @@ def game():
         move(a, b, 'X')
         win = check_winner()
         if win:
+            print_board()
             print(f'{win} wins')
             break
         else:

@@ -12,7 +12,7 @@ def add():
 
 label = tk.Label(text="Click on the button")
 label2 = tk.Label(text="")
-button = tk.Button(text = "I like spaghetti", command=buttonClicked)
+button = tk.Button(text="I like spaghetti", command=buttonClicked)
 
 label.pack()
 label2.pack()

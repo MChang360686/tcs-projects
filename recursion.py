@@ -1,4 +1,3 @@
-
 def print_numbers(num_start, num_end):
     if num_start == num_end:
         print(num_start)

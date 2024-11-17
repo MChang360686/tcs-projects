@@ -1,8 +1,6 @@
 import turtle
 import random
 
-# get code from here https://realpython.com/beginners-guide-python-turtle/#final-project-the-python-turtle-race
-
 die = [1, 2, 3, 4, 5, 6]
 
 t1 = turtle.Turtle()
@@ -52,3 +50,4 @@ for i in range(20):
         print(20*die_outcome)
         t2.fd(20*die_outcome)
 
+# get code from here https://realpython.com/beginners-guide-python-turtle/#final-project-the-python-turtle-race
