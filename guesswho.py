@@ -6,6 +6,9 @@ class Person:
         self.age = age
         self.height = height
         self.weight = weight
+
+    def __str__(self):
+        return f'Name: {self.name}\nAge: {self.age}\nHeight: {self.height}\nWeight: {self.weight}'
     
     def get_name(self):
         return self.name
@@ -19,29 +22,57 @@ class Person:
     def get_weight(self):
         return self.weight
 
+p1 = Person('Alice', 25, 160, 55)
+p2 = Person('Bob', 30, 175, 70)
 
+people = [p1, p2]
 
+def print_people():
+    for person in people:
+        print(person)
 
+def play():
+    print_people()
+    p_index = int(input("Please enter 0-1"))
+    player_char = people[p_index]
+    print(player_char.get_name())
 
+    computer_char = random.choice(people)
+    cpu_num = 0
+    cpu_clues = []
 
+    win = False
 
-'''students = {
-    'alice': [95, 93, 97],
-    'bob': [87, 97, 90]
-}
+    while not win:
+        cmd = input("Please enter age, height, or weight")
+        if cmd == 'age':
+            print(computer_char.get_age())
+        elif cmd == "height":
+            print(computer_char.get_height())
+        elif cmd == "weight":
+            print(computer_char.get_weight)
+        
+        guess = input("Please enter your guess")
 
-def find_percentage(student_dictionary, student_name):
-    grades = student_dictionary[student_name]
-    sum = 0
-    for i in range(0, len(grades)):
-        sum += grades[i]
-    return sum / len(grades)
+        if guess == computer_char.get_name():
+            win = True
+            print(player_char.get_name())
+            print("You Win!")
+            break
 
-print(find_percentage(students, 'alice'))
-
-numbers = '2 32 8 10 47'
-
-def calc_hash(n):
-    numbers = tuple(n.split(' '))
-    return hash(numbers)'''
-
+        if cpu_num == 0:
+            cpu_clues.append(player_char.get_age())
+        elif cpu_num == 1:
+            cpu_clues.append(player_char.get_height())
+        elif cpu_num == 2:
+            cpu_clues.append(player_char.get_weight())
+        else:
+            for person in people:
+                if cpu_clues[0] == player_char.get_age() and cpu_clues[1] == player_char.get_height() and cpu_clues[2] == player_char.get_weight():
+                    win = True
+                    print(person.get_name())
+                    print("You Lose!")
+                    break
+        cpu_num += 1
+            
+play()

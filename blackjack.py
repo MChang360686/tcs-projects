@@ -60,5 +60,3 @@ def game():
                     print(f'Dealer has: {sum_cards(dealer_hand)}')
            
 game()
-'''print(deal_card())
-print(cards[deal_card()])'''

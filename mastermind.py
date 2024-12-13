@@ -12,10 +12,10 @@ def opp_num():
     return num
  
 def game():
-    round = 1
     hidden_number = opp_num()
+    win = False
 
-    while round <= 8:
+    for i in range(0, 8):
         ans = ''
         guess = list(input("Please enter a 4-digit number"))
         print(guess)
@@ -30,15 +30,12 @@ def game():
         if ans == 'AAAA':
             print("You Win!")
             print(hidden_number)
+            win = True
             break
 
         print(ans)
-        round += 1
-        
-    if ans == 'AAAA':
-        print("You Win!")
-        print(hidden_number)
-    else:
+
+    if win == False:    
         print("You Lose")
         print(hidden_number)
 
