@@ -7,7 +7,7 @@ chars = ['l', 'n', 's']
 
 class Password:
     def __init__(self, length=20) -> None:
-        self.length = length
+        self.length = lengthx
 
     def generate(self):
         word = ''

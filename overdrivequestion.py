@@ -12,6 +12,12 @@ def solutionOne(list):
         subList.append(num)
         print(subList)
 
+def thomas_sol(list):
+    for i in range(len(list)):
+        for j in range(i + 1, len(list)):
+            if list[i] == list[j]:
+                return list[i]
+
 # O(nlogn + n) with O(n) temp space
 def sortSol(list):
     list.sort()
@@ -30,9 +36,7 @@ def dictSol(list):
         else:
             dictionary[item] = 'exists'
 
-print(solutionOne(listOfNums))
-print(sortSol(listOfNums))
-print(dictSol(listOfNums))
-
-
-
+#print(solutionOne(listOfNums))
+#print(sortSol(listOfNums))
+#print(dictSol(listOfNums))
+print(thomas_sol(listOfNums))

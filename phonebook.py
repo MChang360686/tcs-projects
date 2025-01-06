@@ -1,5 +1,5 @@
 class Person:
-
+ 
     def __init__(self, name, phone_num):
         self.name = name
         self.phone_num = phone_num
@@ -38,6 +38,7 @@ class PhoneBook:
         
 phonebook = PhoneBook()
 person = Person("John Doe", "123-456-7890")
+person2 = Person("Alice Bob", "0987654321")
 phonebook.add_contact(person)
 print(phonebook.phone_book)
 phonebook.update_contact("John Doe", "987-654-3210")

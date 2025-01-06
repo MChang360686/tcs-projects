@@ -15,6 +15,10 @@ class Stack:
     
   
 s = Stack()
+s.push(1)
+s.push(2)
+s.push(3)
+print(s.peek())
 
 def solution(string):
     for p in string:
