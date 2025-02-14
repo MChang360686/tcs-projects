@@ -41,7 +41,7 @@ def war_game():
 
         p1 = player1.pop(0)
         p2 = player2.pop(0)
-        input()
+        x = input('Press enter to continue')
         print(p1.get_val(), p1.get_suit(), p2.get_val(), p2.get_suit())
 
         if p1.get_val() > p2.get_val():
