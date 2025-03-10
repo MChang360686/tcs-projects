@@ -1,5 +1,3 @@
-import random
-import math
 import time
 
 upgrade_cost = {'click_power': 10, 'grandma': 100, 'factory': 5000}
