@@ -24,207 +24,175 @@ class Deck():
     def shuffle(self):
         random.shuffle(self.deck)
 
-    def get_deck_len(self):
-        return len(self.deck)
-    
     def draw_card(self):
-        return self.deck.pop(0)
+        return self.deck.pop(0) if self.deck else None
     
     def discard_card(self, card):
         self.discard.append(card)
 
     def re_shuffle(self):
         self.deck.extend(self.discard)
+        self.discard = []
+        self.shuffle()
 
 class Player():
-    def __init__(self, name):
+    def __init__(self, name, money):
         self.name = name
-        self.money = 0
+        self.money = money
         self.hand = []
 
-class Table():
-    def __init__(self, num_players, starting_money):
-        players = {}
-        for i in range(0, num_players):
-            players[f"Player {i+1}"] = Player(f"Player {i+1}")
-            players[f"Player {i+1}"].money = starting_money
+    def show_hand(self):
+        return ", ".join(str(card) for card in self.hand)
 
-'''
-Blackjack
-'''
 class BlackJack():
 
     def __init__(self):
-        n_players = int(input('Please enter a number of players'))
-        s_money = int(input('Please enter a starting amount of money for each player'))
-
-        self.table = Table(num_players=n_players+1, starting_money=s_money)
+        n_players = int(input('Enter the number of players: '))
+        s_money = int(input('Enter starting money for each player: '))
+        self.players = [Player(f"Player {i+1}", s_money) for i in range(n_players)]
+        self.dealer = Player("Dealer", 0)  # Dealer has no money
         self.deck = Deck()
-
-        bets = {'dealer': 0}
+        self.bets = {}
 
     def deal_hand(self):
-        for player in self.table.players:
-            for i in range(0, 2):
-                player.hand.append(self.deck.draw_card())
+        """Give each player and the dealer two cards."""
+        for player in self.players + [self.dealer]:
+            player.hand = [self.deck.draw_card(), self.deck.draw_card()]
 
     def make_bets(self):
-        for player in self.table.players:
-            bet_amt = int(input(f"Please enter a bet for {player.name}"))
-            if bet_amt > player.money:
-                bet_amt = player.money
-            else:
-                player.money -= bet_amt
-            self.bets[player.name] = bet_amt
+        """Get bets from players."""
+        for player in self.players:
+            while True:
+                try:
+                    bet_amt = int(input(f"{player.name}, enter your bet (Available: ${player.money}): "))
+                    if bet_amt > player.money:
+                        print("You don't have enough money. Bet lower.")
+                    else:
+                        player.money -= bet_amt
+                        self.bets[player.name] = bet_amt
+                        break
+                except ValueError:
+                    print("Please enter a valid number.")
 
     def hand_value(self, hand):
+        """Calculate the value of a hand."""
         value = 0
+        aces = 0
+        
         for card in hand:
-            if card.value == 'Ace':
-                if value + 11 <= 21:
-                    value += 11
-                else:
-                    value += 1
-            elif card.value == 'Jack' or card.value == 'Queen' or card.value == 'King':
+            if card.value in ['Jack', 'Queen', 'King']:
                 value += 10
+            elif card.value == 'Ace':
+                aces += 1
+                value += 11
             else:
                 value += int(card.value)
 
+        # Handle Aces (if value > 21, convert Aces from 11 to 1)
+        while value > 21 and aces > 0:
+            value -= 10
+            aces -= 1
+
         return value
 
-    def hit(self, player_num):
-        player = self.table.players[f"Player {player_num}"]
+    def hit(self, player):
+        """Draw a card for the player."""
+        player.hand.append(self.deck.draw_card())
 
-        if player_num == 1:
-            if self.hand_value(player.hand) < 17:
-                player.hand.append(self.deck.draw_card())
-        else:
-            player.hand.append(self.deck.draw_card())
+    def check_bust(self, player):
+        """Check if a player is bust (over 21)."""
+        return self.hand_value(player.hand) > 21
 
-        return self.hand_value(player.hand)
-    
-    def stand(self, player_num):
-        player = self.table.players[f"Player {player_num}"]
-        return self.hand_value(player.hand)
-    
-    def check_bust(self, player_num):
-        player = self.table.players[f"Player {player_num}"]
-        if self.hand_value(player.hand) > 21:
-            return True
-        else:
-            return False
+    def play_turn(self, player):
+        """Player's turn: choose to hit or stand."""
+        print(f"{player.name}'s turn. Current hand: {player.show_hand()} (Value: {self.hand_value(player.hand)})")
         
+        while self.hand_value(player.hand) < 21:
+            action = input("Enter 'hit' or 'stand': ").strip().lower()
+            if action == 'hit':
+                self.hit(player)
+                print(f"New hand: {player.show_hand()} (Value: {self.hand_value(player.hand)})")
+                if self.check_bust(player):
+                    print(f"{player.name} busts!")
+                    return
+            elif action == 'stand':
+                break
+            else:
+                print("Invalid input. Please enter 'hit' or 'stand'.")
+
+    def dealer_turn(self):
+        """Dealer logic: Must hit if below 17."""
+        print(f"\nDealer's turn. Dealer's hand: {self.dealer.show_hand()} (Value: {self.hand_value(self.dealer.hand)})")
+        
+        while self.hand_value(self.dealer.hand) < 17:
+            print("Dealer hits.")
+            self.hit(self.dealer)
+            print(f"Dealer's new hand: {self.dealer.show_hand()} (Value: {self.hand_value(self.dealer.hand)})")
+            
+            if self.check_bust(self.dealer):
+                print("Dealer busts!")
+                return
+
+        print("Dealer stands.")
+
+    def determine_winners(self):
+        """Decide winners and payout bets."""
+        dealer_value = self.hand_value(self.dealer.hand)
+
+        for player in self.players:
+            player_value = self.hand_value(player.hand)
+
+            if player_value > 21:
+                print(f"{player.name} loses (busted).")
+            elif dealer_value > 21 or player_value > dealer_value:
+                print(f"{player.name} wins! Bet doubled.")
+                player.money += self.bets[player.name] * 2
+            elif player_value == dealer_value:
+                print(f"{player.name} ties with dealer. Bet returned.")
+                player.money += self.bets[player.name]
+            else:
+                print(f"{player.name} loses.")
+
     def game(self):
-
-        for player in self.table.players:
-            self.bets[player] = 0
-
+        """Play one full round of Blackjack."""
         while True:
+            self.bets.clear()
             self.make_bets()
             self.deal_hand()
-            for player in self.table.players:
-                hand_value = self.hand_value(player.hand)
-                print(f"{player.name} has a hand value of {hand_value}")
 
-                player_decision = input("Please enter either hit or stand")
+            # Players take turns
+            for player in self.players:
+                self.play_turn(player)
 
-                while player_decision != 'stand':
-                    if player_decision == 'hit':
-                        hand_value = self.hit(player.name)
-                        print(f"{player.name} has a hand value of {hand_value}")
-                        if self.check_bust(player.name):
-                            print("You bust")
-                            break
-                    else:
-                        print("I don't know that command")
-                        player_decision = input("Please enter either hit or stand")
-                        continue
-                    player_decision = input("Please enter either hit or stand")
+            # Dealer's turn
+            self.dealer_turn()
 
-                if player.hand_value(player.hand) > 21:
-                    player.money -= self.bets[player.name]
-                elif player.hand_value(player.hand) == 21:
-                    player.money += self.bets[player.name] * 3
-                else:
-                    if player.hand_value(player.hand) > hand_value(self.table.players['Player 1'].hand):
-                        player.money += self.bets[player.name] * 2
+            # Determine winners
+            self.determine_winners()
 
+            # Check if players have money left
+            for player in self.players:
+                if player.money <= 0:
+                    print(f"{player.name} is out of money and leaves the game.")
 
-                
-                
-    
-   
+            # Ask if players want another round
+            again = input("\nPlay another round? (yes/no): ").strip().lower()
+            if again != 'yes':
+                print("Thanks for playing!")
+                break
 
-
-
-'''
-Classic 5 card draw
-'''
 class Cantredraw():
+    
     def __init__(self):
-        n_players = int(input('Please enter a number of players'))
-        s_money = int(input('Please enter a starting amount of money'))
-
-        self.table = Table(num_players=n_players, starting_money=s_money)
-        self.deck = Deck()
-
-    def deal_hand(self):
-        for player in self.table.players:
-            for i in range(0, 5):
-                player.hand.append(self.deck.draw_card())
-
-
-    '''Check if all cards in hand are the same suit'''
-    def check_suit(self, hand):
-        for card in hand:
-            if card.suit != hand[0].suit:
-                return False
-
-        return True
-
-    '''Check for duplicates'''
-    def check_for_duplicates(self, hand):
-        cards = {}
-        duplicates = False
-        for card in hand:
-            if card.value in cards:
-                cards[card.value] = None
-            else:
-                duplicates = True
-
-        return duplicates
-
-    '''Check number of duplicates (pair, 3 of a kind, 4 of a kind)'''
-    
-    
-
-    '''Read value of hand of cards and return a hash'''
-    def hand_value(self, hand):
-        hand_val_numerical = []
-        for card in hand:
-            if card.value == 'Ace':
-                hand_val_numerical.append(13)
-            elif card.value == 'Jack':
-                hand_val_numerical.append(10)
-            elif card.value == 'Queen':
-                hand_val_numerical.append(11)
-            elif card.value == 'King':
-                hand_val_numerical.append(12)
-            else:
-                hand_val_numerical.append(int(card.value))
-
-        hand_val_numerical.sort()
-        return hand_val_numerical
-
+        pass
 
 if __name__ == '__main__':
-    game = input("Please enter a game (blackjack, cantredraw)")
+    game = input("Enter a game (blackjack, cantredraw): ").strip().lower()
 
     if game == 'blackjack':
-        game = BlackJack()
-        game.game()
+        bj_game = BlackJack()
+        bj_game.game()
     elif game == 'cantredraw':
-        game = Cantredraw()
-        game.deal_hand()
+        print("Cantredraw game is not fully implemented yet.")
     else:
-        print("I don't have that game")
+        print("Invalid game selection.")
