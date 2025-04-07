@@ -32,7 +32,7 @@ class Deck():
 
     def re_shuffle(self):
         self.deck.extend(self.discard)
-        self.discard = []
+        self.discard.clear()
         self.shuffle()
 
 class Player():
@@ -181,18 +181,236 @@ class BlackJack():
                 print("Thanks for playing!")
                 break
 
-class Cantredraw():
+class TexasHoldEm():
     
     def __init__(self):
-        pass
+        n_players = int(input('Enter the number of players: '))
+        s_money = int(input('Enter starting money for each player: '))
+        self.players = [Player(f"Player {i+1}", s_money) for i in range(n_players)]
+        self.deck = Deck()
+        self.community_cards = []
+        self.bets = {}
+
+    def deal_hands(self):
+        for player in self.players:
+            player.hand = [self.deck.draw_card(), self.deck.draw_card()]
+
+    '''Deal the flop (3 cards)'''
+    def deal_flop(self):
+        for _ in range(0, 3):
+            self.community_cards.append(self.deck.draw_card())
+        
+        for player in self.players:
+            player.hand.extend(self.community_cards)
+
+        print(f'Flop: {self.community_cards[0]}, {self.community_cards[1]}, {self.community_cards[2]}')
+
+    '''Deal the turn'''
+    def deal_turn(self):
+        self.community_cards.append(self.deck.draw_card())
+
+        for player in self.players:
+            player.hand.append(self.community_cards[3])
+
+        print(f'Turn: {self.community_cards[3]}')
+
+    '''Deal the river'''
+    def deal_river(self):
+        self.community_cards.append(self.deck.draw_card())
+
+        for player in self.players:
+            player.hand.append(self.community_cards[4])
+
+        print(f'River: {self.community_cards[4]}')
+
+    def bet(self, player_name, amt):
+        for player in self.players:
+            if player.name == player_name:
+                player.money -= amt
+                self.bets[player_name] = amt
+            else:
+                continue
+
+    def fold(self, player_name):
+        self.bets[player_name] = 0
+
+    def check_suits(self, player):
+        for card in player.hand:
+            if card.suit == player.hand[0].suit:
+                continue
+            else:
+                return False
+        return True
+    
+    def check_duplicates(self, player):
+        duplicates = {}
+        for card in player.hand:
+            if card.value in duplicates.keys():
+                duplicates[card.value] += 1
+            else:
+                duplicates[card.value] = 1
+
+        return duplicates
+    
+    def check_order(self, player):
+        hashed_hand = []
+        for card in player.hand:
+            match card.value:
+                case '2':
+                    hashed_hand.append(2)
+                case '3':
+                    hashed_hand.append(3)
+                case '4':
+                    hashed_hand.append(4)
+                case '5':
+                    hashed_hand.append(5)
+                case '6':    
+                    hashed_hand.append(6)
+                case '7':
+                    hashed_hand.append(7)
+                case '8':
+                    hashed_hand.append(8)
+                case '9':
+                    hashed_hand.append(9)
+                case '10':
+                    hashed_hand.append(10)
+                case 'J':
+                    hashed_hand.append(11)
+                case 'Q':
+                    hashed_hand.append(12)
+                case 'K':    
+                    hashed_hand.append(13)
+                case 'A':
+                    hashed_hand.append(14)
+                case _:
+                    continue
+
+        hashed_hand.sort()
+
+        for i in range(3, 6):
+            if hashed_hand[i] == hashed_hand[i+1] - 1:
+                continue
+            else:
+                return False
+            
+        return True
+
+
+    def sort_hands(self):
+        hands = {'sf': [], '4ok': [], 'fh': [], 'f': [], 's': [], '3ok': [], '2p': [], '1p': [], 'hc': []}
+        for player in self.players:
+            player_dup = self.check_duplicates(player)
+            flush = self.check_suits(player)
+            order = self.check_order(player)
+
+            if flush == True and order == True:
+                hands['sf'].append(player.name)
+            elif 4 in player_dup.values():
+                hands['4ok'].append(player.name)
+            elif 3 in player_dup.values() and 2 in player_dup.values():
+                hands['fh'].append(player.name)
+            elif flush == True:
+                hands['f'].append(player.name)
+            elif order == True:
+                hands['s'].append(player.name)
+            elif 3 in player_dup.values():
+                hands['3ok'].append(player.name)
+            elif len([pair for pair in player_dup.values() if pair == 2]) == 2:
+                hands['2p'].append(player.name)
+            elif 2 in player_dup.values():
+                hands['1p'].append(player.name)
+            else:
+                hands['hc'].append(player.name)
+
+        print(hands)
+        return hands
+
+    def game(self):
+        current_players = self.players
+
+        self.deal_hands()
+        self.deal_flop()
+
+        '''for card in self.community_cards:
+            print(card)'''
+        
+        for player in current_players:
+            print(f'{player.name} has {player.hand[0]}, {player.hand[1]}')
+            cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
+            if cmd == 'fold':
+                self.fold(player.name)
+                current_players.remove(player)
+            elif cmd == 'call':
+                amt = int(input('How much would you like to bet? '))
+                self.bet(player.name, amt)
+            elif cmd == 'raise':
+                raise_amt = int(input('How much would you like to raise? '))
+                self.bet(player.name, raise_amt)
+            else:
+                print('Invalid command. Please enter "fold", "call", or "raise".')
+    
+
+        self.deal_turn()
+
+        for player in current_players:
+            cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
+            if cmd == 'fold':
+                self.fold(player.name)
+                current_players.remove(player)
+            elif cmd == 'call':
+                self.bet(player.name, self.bets[player.name])
+            elif cmd == 'raise':
+                raise_amt = int(input('How much would you like to raise? '))
+                self.bet(player.name, self.bets[player.name] + raise_amt)
+            else:
+                print('Invalid command. Please enter "fold", "call", or "raise".')
+
+        self.deal_river()
+
+        hands_ranked = self.sort_hands()
+
+        '''Go down the Dict to see who has the highest ranked hand'''
+        for hand in hands_ranked:
+            if hands_ranked[hand] != []:
+                '''For each player, give them the pot / num players with highest hand'''
+                for player in self.players:
+                    print(f'{player.name} wins with {player.hand}')
+                    player.money += sum(self.bets.values()) / len(hands_ranked[hand])
+
+'''TODO: fix betting, allow for mult rounds, fix printing out hands at the end'''
+
+    
+class ChorDaiDi():
+
+    def __init__(self):
+        n_players = int(input('Enter the number of players: '))
+        if n_players > 4:
+            print("Maximum of 4 players allowed.")
+            n_players = 4
+        s_money = int(input('Enter starting money for each player: '))
+        self.players = [Player(f"Player {i+1}", s_money) for i in range(n_players)]
+        self.deck = Deck()
+        self.bets = {}
+        self.dealer = 0
+
+    def deal_hands(self):
+        cards_dealt = 0
+        
+
+    
+
+    
+
+            
 
 if __name__ == '__main__':
-    game = input("Enter a game (blackjack, cantredraw): ").strip().lower()
+    game = input("Enter a game (blackjack, texas holdem): ").strip().lower()
 
     if game == 'blackjack':
         bj_game = BlackJack()
         bj_game.game()
-    elif game == 'cantredraw':
-        print("Cantredraw game is not fully implemented yet.")
+    elif game == 'holdem':
+        th_game = TexasHoldEm()
+        th_game.game()
     else:
         print("Invalid game selection.")

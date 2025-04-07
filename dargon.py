@@ -1,5 +1,7 @@
 import random
 
+map = [['', '', ''], ['', '', ''], ['', '', '']]
+
 class Character:
     def __init__(self, str, health, agi, speed, dex):
         self.str = str
@@ -7,6 +9,8 @@ class Character:
         self.agi = agi
         self.speed = speed
         self.dex = dex
+        x_pos = 1
+        y_pos = 1
 
     def get_str(self):
         return self.str
@@ -37,8 +41,30 @@ class Character:
 
     def set_dex(self, amount):
         self.dex = amount
+        
+    def move(self):
+        direction = input("Please enter a direction")
+        
+        if direction == 'left' and x_pos > 0:
+            map[y_pos][x_pos] = ''
+            x_pos -= 1
+            map[y_pos][x_pos] = 'P'
+        elif direction == 'right' and x_pos < len(map[y_pos]) - 1:
+            map[y_pos][x_pos] = ''
+            x_pos += 1
+            map[y_pos][x_pos] = 'P'
+        elif direction == 'up' and y_pos > 0:
+            map[y_pos][x_pos] = ''
+            y_pos -= 1
+            map[y_pos][x_pos] = 'P'
+        elif direction == 'down' and y_pos < len(map) - 1:
+            map[y_pos][x_pos] = ''
+            y_pos += 1
+            map[y_pos][x_pos] = 'P'
+            
 
-class Party():
+
+class Party:
     def __init__(self):
         self.members = []
         self.size = 0
@@ -51,39 +77,47 @@ class Party():
         self.members.remove(member)
         self.size -= 1
 
+
 class Enemy(Character):
     def __init__(self, str, health, agi, speed, dex):
         super().__init__(str, health, agi, speed, dex)
 
     def get_spec(self):
         return self.spec
-    
+
     def set_spec(self, spec):
         self.spec = spec
 
-class Loot():
+
+class Loot:
     def __init__(self, name, value):
         self.name = name
         self.value = value
 
     def get_name(self):
         return self.name
-    
+
     def get_value(self):
         return self.value
-    
+
     def set_name(self):
-        choices = ['a coin', 'two coins', 'four coins', 'eight coins', 'sixteen coins']
+        choices = ["a coin", "two coins", "four coins", "eight coins", "sixteen coins"]
         self.name = random.choice(choices)
 
     def set_value(self):
-        if self.name == 'a coin':
+        if self.name == "a coin":
             self.value = 1
-        elif self.name == 'two coins':
+        elif self.name == "two coins":
             self.value = 2
-        elif self.name == 'four coins':
+        elif self.name == "four coins":
             self.value = 4
-        elif self.name == 'eight coins':
+        elif self.name == "eight coins":
             self.value = 8
-        elif self.name == 'sixteen coins':
+        elif self.name == "sixteen coins":
             self.value = 16
+
+def print_map():
+    for row in map:
+        print(row)
+        
+        
