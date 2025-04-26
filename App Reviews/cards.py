@@ -286,8 +286,9 @@ class TexasHoldEm():
                     continue
 
         hashed_hand.sort()
+        print(hashed_hand)
 
-        for i in range(3, 6):
+        for i in range(len(hashed_hand) - 1):
             if hashed_hand[i] == hashed_hand[i+1] - 1:
                 continue
             else:
@@ -326,56 +327,59 @@ class TexasHoldEm():
         return hands
 
     def game(self):
-        current_players = self.players
+        new_round = True
+        while new_round == True:
+            current_players = self.players
 
-        self.deal_hands()
-        self.deal_flop()
+            self.deal_hands()
+            self.deal_flop()
 
-        '''for card in self.community_cards:
-            print(card)'''
+            '''for card in self.community_cards:
+                print(card)'''
+            
+            for player in current_players:
+                print(f'{player.name} has {player.hand[0]}, {player.hand[1]}')
+                cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
+                if cmd == 'fold':
+                    self.fold(player.name)
+                    current_players.remove(player)
+                elif cmd == 'call':
+                    amt = int(input('How much would you like to bet? '))
+                    self.bet(player.name, amt)
+                elif cmd == 'raise':
+                    raise_amt = int(input('How much would you like to raise? '))
+                    self.bet(player.name, raise_amt)
+                else:
+                    print('Invalid command. Please enter "fold", "call", or "raise".')
         
-        for player in current_players:
-            print(f'{player.name} has {player.hand[0]}, {player.hand[1]}')
-            cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
-            if cmd == 'fold':
-                self.fold(player.name)
-                current_players.remove(player)
-            elif cmd == 'call':
-                amt = int(input('How much would you like to bet? '))
-                self.bet(player.name, amt)
-            elif cmd == 'raise':
-                raise_amt = int(input('How much would you like to raise? '))
-                self.bet(player.name, raise_amt)
-            else:
-                print('Invalid command. Please enter "fold", "call", or "raise".')
-    
 
-        self.deal_turn()
+            self.deal_turn()
 
-        for player in current_players:
-            cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
-            if cmd == 'fold':
-                self.fold(player.name)
-                current_players.remove(player)
-            elif cmd == 'call':
-                self.bet(player.name, self.bets[player.name])
-            elif cmd == 'raise':
-                raise_amt = int(input('How much would you like to raise? '))
-                self.bet(player.name, self.bets[player.name] + raise_amt)
-            else:
-                print('Invalid command. Please enter "fold", "call", or "raise".')
+            for player in current_players:
+                cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
+                if cmd == 'fold':
+                    self.fold(player.name)
+                    current_players.remove(player)
+                elif cmd == 'call':
+                    self.bet(player.name, self.bets[player.name])
+                elif cmd == 'raise':
+                    raise_amt = int(input('How much would you like to raise? '))
+                    self.bet(player.name, self.bets[player.name] + raise_amt)
+                else:
+                    print('Invalid command. Please enter "fold", "call", or "raise".')
 
-        self.deal_river()
+            self.deal_river()
 
-        hands_ranked = self.sort_hands()
+            hands_ranked = self.sort_hands()
 
-        '''Go down the Dict to see who has the highest ranked hand'''
-        for hand in hands_ranked:
-            if hands_ranked[hand] != []:
-                '''For each player, give them the pot / num players with highest hand'''
-                for player in self.players:
-                    print(f'{player.name} wins with {player.hand}')
-                    player.money += sum(self.bets.values()) / len(hands_ranked[hand])
+            '''Go down the Dict to see who has the highest ranked hand'''
+            for hand in hands_ranked:
+                if len(hands_ranked[hand]) > 0:
+                    '''For each player, give them the pot / num players with highest hand'''
+                    for player in hands_ranked[hand]:
+                        print(f'{player} wins with {current_players[current_players.index(player)].hand}')
+                        player.money += sum(self.bets.values()) / len(hands_ranked[hand])
+            new_round = input('Play another round? (y/n)')
 
 '''TODO: fix betting, allow for mult rounds, fix printing out hands at the end'''
 
@@ -391,11 +395,76 @@ class ChorDaiDi():
         self.players = [Player(f"Player {i+1}", s_money) for i in range(n_players)]
         self.deck = Deck()
         self.bets = {}
-        self.dealer = 0
+        self.ranks = {'Spades': 3, 'Hearts': 2, 'Clubs': 1, 'Diamonds': 0}
 
     def deal_hands(self):
         cards_dealt = 0
+
+        for i in range(0, len(self.deck)):
+            if len(self.deck) - cards_dealt < self.n_players:
+                '''push rest of cards to 3 of diamonds'''
+                break
+            else:
+                self.players[f'Player {(i % self.n_players) + 1}'].append(self.deck.draw_card())
+
+            cards_dealt += 1
+
+        for player in self.players:
+            for card in player.hand():
+                if card.value == '3' and card.suit == 'Diamonds':
+                    for card in self.deck():
+                        player.hand.append(card)
+                else:
+                    continue
+
+    
+    def validate_cards(self, prev_hand, player_hand):
+        prev = []
+        player = []
+
+        for card in prev_hand:
+            if card.value not in ['Jack', 'Queen', 'King', 'Ace', '2']:
+                prev.append(int(card.value))
+            else:
+                match(card.value):
+
+                    case 'Jack':
+                        prev.append(11)
+                    case 'Queen':
+                        prev.append(12)
+                    case 'King':
+                        prev.append(13)
+                    case 'Ace':
+                        prev.append(14)
+                    case '2':
+                        prev.append(15)
+                    case _:
+                        print('Invalid Card')
+                        return False
+                    
+        for card in player_hand:
+            if card.value not in ['Jack', 'Queen', 'King', 'Ace', '2']:
+                player.append(int(card.value))
+            else:
+                match(card.value):
+
+                    case 'Jack':
+                        player.append(11)
+                    case 'Queen':
+                        player.append(12)
+                    case 'King':
+                        player.append(13)
+                    case 'Ace':
+                        player.append(14)
+                    case '2':
+                        player.append(15)
+                    case _:
+                        print('Invalid Card')
+                        return False
+
         
+
+        return True
 
     
 
@@ -404,7 +473,7 @@ class ChorDaiDi():
             
 
 if __name__ == '__main__':
-    game = input("Enter a game (blackjack, texas holdem): ").strip().lower()
+    game = input("Enter a game (blackjack, holdem): ").strip().lower()
 
     if game == 'blackjack':
         bj_game = BlackJack()

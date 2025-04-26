@@ -24,3 +24,5 @@ def solve(targetNum, numList):
 
 #print(solve(target, arr))
 print(naive_solve(target, arr))
+
+'''T'''
