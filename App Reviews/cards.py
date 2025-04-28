@@ -376,12 +376,22 @@ class TexasHoldEm():
             for hand in hands_ranked:
                 if len(hands_ranked[hand]) > 0:
                     '''For each player, give them the pot / num players with highest hand'''
-                    for player in hands_ranked[hand]:
-                        print(f'{player} wins with {current_players[current_players.index(player)].hand}')
-                        player.money += sum(self.bets.values()) / len(hands_ranked[hand])
-            new_round = input('Play another round? (y/n)')
+                    for player_name in hands_ranked[hand]:
+                        for player in self.players:
+                            if player.name == player_name:
+                                cards = [(card.suit, card.value) for card in player.hand]
+                                print(f'{player.name} wins with {cards}')
+                                player.money += sum(self.bets.values()) // len(hands_ranked[hand])
+                    break
+                else:
+                    continue
 
-'''TODO: fix betting, allow for mult rounds, fix printing out hands at the end'''
+            for player in self.players:
+                print(f'{player.name} has {player.money}')
+
+            new_round = True if input('Play another round? (y/n)') == 'y' else False
+
+'''TODO: fix betting'''
 
     
 class ChorDaiDi():
@@ -462,9 +472,49 @@ class ChorDaiDi():
                         print('Invalid Card')
                         return False
 
-        
+        prev_sum = sum(prev)
+        player_sum = sum(player)
 
-        return True
+        if player_sum >= prev_sum:
+            return True
+        else:
+            return False
+
+    
+    def game(self):
+        
+        win = False
+        while win != True:
+            for player in self.players:
+                if len(player.hand) > 0:
+                    print(player.hand)
+                    play = input('Please enter card indices separated by commas or enter to pass')
+                    if play == '':
+                        '''Player passes'''
+                        continue
+                    elif len(play.split(',')) == 1:
+                        if int(play) <= len(player.hand) - 1 and int(play) >= 0:
+                            if self.validate_cards(player.hand[int(play)]) == True:
+                                player.hand.pop(int(play))
+                                self.deck.discard.append(player.hand[int(play)])
+                            else:
+                                print('Invalid play')
+                    else:
+                        hand = []
+                        for number in play.split(','):
+                            
+                            hand.append(int(number))
+
+                        if self.validate_cards(hand) == True:
+                            for number in play.split(','):
+                                self.deck.discard.append(player.hand[int(number)])
+                                player.hand.pop(int(number))
+                                
+
+                else:
+                    win = True
+                    break
+
 
     
 
@@ -473,13 +523,16 @@ class ChorDaiDi():
             
 
 if __name__ == '__main__':
-    game = input("Enter a game (blackjack, holdem): ").strip().lower()
+    game = input("Enter a game (blackjack, texas holdem): ").strip().lower()
 
     if game == 'blackjack':
         bj_game = BlackJack()
         bj_game.game()
-    elif game == 'holdem':
+    elif game == 'texas holdem':
         th_game = TexasHoldEm()
         th_game.game()
+    elif game == 'chordaidi':
+        cdd = ChorDaiDi()
+        cdd.game()
     else:
         print("Invalid game selection.")
