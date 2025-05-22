@@ -43,3 +43,5 @@ class BinaryTree:
                 self.root.left = Node(data)
             else:
                 self.root.left.add_node(data)
+
+bt = BinaryTree(1)

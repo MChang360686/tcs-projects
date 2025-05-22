@@ -24,7 +24,7 @@ def game():
         for player in players:
             data[player] = input('Please enter a number of steps')
 
-        num_valid_steps = random.randint(5-15)
+        num_valid_steps = random.randint(5, 15)
 
         for player in players:
             if data[player] <= num_valid_steps:

@@ -1,0 +1,15 @@
+C:\Users\Owner\tcs-projects\Satesh\bin\Debug\net8.0\Satesh.exe
+C:\Users\Owner\tcs-projects\Satesh\bin\Debug\net8.0\Satesh.deps.json
+C:\Users\Owner\tcs-projects\Satesh\bin\Debug\net8.0\Satesh.runtimeconfig.json
+C:\Users\Owner\tcs-projects\Satesh\bin\Debug\net8.0\Satesh.dll
+C:\Users\Owner\tcs-projects\Satesh\bin\Debug\net8.0\Satesh.pdb
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.AssemblyInfoInputs.cache
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.AssemblyInfo.cs
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.csproj.CoreCompileInputs.cache
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.sourcelink.json
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.dll
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\refint\Satesh.dll
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.pdb
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\Satesh.genruntimeconfig.cache
+C:\Users\Owner\tcs-projects\Satesh\obj\Debug\net8.0\ref\Satesh.dll

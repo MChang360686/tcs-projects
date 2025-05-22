@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Program
 {
@@ -7,7 +7,6 @@ public class Program
         int[] secret = new int[4];
         Random rand = new Random();
 
-        // Generate secret code (digits 1-9)
         for (int i = 0; i < 4; i++)
         {
             secret[i] = rand.Next(1, 10);
@@ -35,7 +34,6 @@ public class Program
             bool[] secretUsed = new bool[4];
             bool[] guessUsed = new bool[4];
 
-            // First pass: check for exact matches
             for (int i = 0; i < 4; i++)
             {
                 if (guess[i] == secret[i])
@@ -46,7 +44,6 @@ public class Program
                 }
             }
 
-            // Second pass: check for partial matches
             for (int i = 0; i < 4; i++)
             {
                 if (guessUsed[i]) continue;
