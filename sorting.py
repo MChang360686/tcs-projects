@@ -2,17 +2,12 @@ import random
 
 numbers = []
 
-"""
-Makes a list of pre-determined size of "random" floats
-"""
 def make_num_list(length):
     for i in range(length):
-        num = random.random()
+        num = random.randint(1, 10)
         numbers.append(num)
 
-"""zx
-Finds smallest element and brings it to the first position
-"""
+
 def select_sort(list):
     for i in range(len(list)):
         smallest = i
@@ -23,9 +18,10 @@ def select_sort(list):
 
     print(list)
 
-"""
-Iterates through list and puts item in the correct position
-"""
+make_num_list(5)
+print(numbers)
+select_sort(numbers)
+
 def insert_sort(list):
     for i in range(1, len(list)):
         key = list[i]
@@ -37,10 +33,8 @@ def insert_sort(list):
 
     print(list)
 
-
-
+numbers.clear()
 make_num_list(5)
 print(numbers)
-select_sort(numbers)
 insert_sort(numbers)
     

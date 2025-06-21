@@ -55,3 +55,4 @@ def game():
 
 
 game()
+#TODO: add domino names and adjacency matrix https://www.geeksforgeeks.org/graph-and-its-representations/

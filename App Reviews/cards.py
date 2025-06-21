@@ -513,12 +513,7 @@ class ChorDaiDi():
 
                 else:
                     win = True
-                    break
-
-
-    
-
-    
+                    break  
 
             
 
