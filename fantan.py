@@ -24,6 +24,3 @@ def game():
             print('Player ' + str(i) + ' was wrong')
             
 game()
-    
-    
-    

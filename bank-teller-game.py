@@ -4,7 +4,7 @@ class Person():
     def __init__(self, name):
         self.name = name
         self.loan_amt = random.randint(100, 5000)
-        self.repay_factor = random.randint(0, 100)
+        self.repay_factor = random.randint(50, 100)
 
 def generate_people():
     people = []

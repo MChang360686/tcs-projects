@@ -12,14 +12,9 @@ public class budgetTracker {
 
     /*
      * Take input
-     * 
-     * 
      * Track how much money you have saved
-     * 
-     * 
+     * Write a function to write to a CSV
      */
-
-    // Write a function to write to a CSV
 
     // Print an array
     public static void printArr(String[] arr) {
