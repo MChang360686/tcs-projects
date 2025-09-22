@@ -1,4 +1,5 @@
 import random
+import itertools
 
 class Card():
     def __init__(self, suit, value):
@@ -181,8 +182,7 @@ class BlackJack():
                 print("Thanks for playing!")
                 break
 
-class TexasHoldEm():
-    
+class TexasHoldEm:
     def __init__(self):
         n_players = int(input('Enter the number of players: '))
         s_money = int(input('Enter starting money for each player: '))
@@ -190,208 +190,218 @@ class TexasHoldEm():
         self.deck = Deck()
         self.community_cards = []
         self.bets = {}
+        self.pot = 0
+        self.current_bet = 0
+
+    def reset_round(self):
+        self.deck = Deck()
+        self.community_cards = []
+        self.bets.clear()
+        self.pot = 0
+        self.current_bet = 0
+        for player in self.players:
+            player.hand = []
 
     def deal_hands(self):
         for player in self.players:
             player.hand = [self.deck.draw_card(), self.deck.draw_card()]
 
-    '''Deal the flop (3 cards)'''
     def deal_flop(self):
-        for _ in range(0, 3):
-            self.community_cards.append(self.deck.draw_card())
-        
-        for player in self.players:
-            player.hand.extend(self.community_cards)
+        self.community_cards.extend([self.deck.draw_card() for _ in range(3)])
+        print(f'Flop: {", ".join(str(c) for c in self.community_cards)}')
 
-        print(f'Flop: {self.community_cards[0]}, {self.community_cards[1]}, {self.community_cards[2]}')
-
-    '''Deal the turn'''
     def deal_turn(self):
         self.community_cards.append(self.deck.draw_card())
+        print(f'Turn: {self.community_cards[-1]}')
 
-        for player in self.players:
-            player.hand.append(self.community_cards[3])
-
-        print(f'Turn: {self.community_cards[3]}')
-
-    '''Deal the river'''
     def deal_river(self):
         self.community_cards.append(self.deck.draw_card())
+        print(f'River: {self.community_cards[-1]}')
 
-        for player in self.players:
-            player.hand.append(self.community_cards[4])
+    def place_bet(self, player, amount):
+        """Handles betting and pot updates"""
+        if amount > player.money:
+            amount = player.money  # all-in if player doesn't have enough
+        player.money -= amount
+        self.pot += amount
+        self.bets[player.name] = self.bets.get(player.name, 0) + amount
+        print(f"{player.name} bets {amount}. Remaining money: {player.money}")
 
-        print(f'River: {self.community_cards[4]}')
+    def betting_round(self, players):
+        self.current_bet = 0
+        active_players = players[:]
 
-    def bet(self, player_name, amt):
-        for player in self.players:
-            if player.name == player_name:
-                player.money -= amt
-                self.bets[player_name] = amt
-            else:
+        for player in active_players[:]:
+            if player.money <= 0:
+                print(f"{player.name} is all-in and skips betting.")
                 continue
 
-    def fold(self, player_name):
-        self.bets[player_name] = 0
+            print(f"{player.name}'s turn. Money: {player.money}")
+            cmd = input(f"{player.name}, what would you like to do? (fold, call, raise, check): ").strip().lower()
 
-    def check_suits(self, player):
-        for card in player.hand:
-            if card.suit == player.hand[0].suit:
-                continue
-            else:
-                return False
-        return True
-    
-    def check_duplicates(self, player):
-        duplicates = {}
-        for card in player.hand:
-            if card.value in duplicates.keys():
-                duplicates[card.value] += 1
-            else:
-                duplicates[card.value] = 1
+            if cmd == "fold":
+                print(f"{player.name} folds.")
+                active_players.remove(player)
 
-        return duplicates
-    
+            elif cmd == "check":
+                if self.current_bet == 0:
+                    print(f"{player.name} checks.")
+                else:
+                    print(f"{player.name} cannot check, must call or fold.")
+                    active_players.remove(player)
+
+            elif cmd == "call":
+                call_amt = self.current_bet - self.bets.get(player.name, 0)
+                self.place_bet(player, call_amt)
+
+            elif cmd == "raise":
+                raise_amt = int(input("Enter raise amount: "))
+                total_bet = (self.current_bet - self.bets.get(player.name, 0)) + raise_amt
+                self.place_bet(player, total_bet)
+                self.current_bet += raise_amt
+
+            else:
+                print("Invalid command. Auto-folding.")
+                active_players.remove(player)
+
+        return active_players
+
     def check_order(self, player):
-        hashed_hand = []
-        for card in player.hand:
-            match card.value:
-                case '2':
-                    hashed_hand.append(2)
-                case '3':
-                    hashed_hand.append(3)
-                case '4':
-                    hashed_hand.append(4)
-                case '5':
-                    hashed_hand.append(5)
-                case '6':    
-                    hashed_hand.append(6)
-                case '7':
-                    hashed_hand.append(7)
-                case '8':
-                    hashed_hand.append(8)
-                case '9':
-                    hashed_hand.append(9)
-                case '10':
-                    hashed_hand.append(10)
-                case 'J':
-                    hashed_hand.append(11)
-                case 'Q':
-                    hashed_hand.append(12)
-                case 'K':    
-                    hashed_hand.append(13)
-                case 'A':
-                    hashed_hand.append(14)
-                case _:
-                    continue
-
+        values_map = {
+            "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
+            "8": 8, "9": 9, "10": 10,
+            "Jack": 11, "Queen": 12, "King": 13, "Ace": 14
+        }
+        hashed_hand = [values_map[card.value] for card in player.hand]
         hashed_hand.sort()
-        print(hashed_hand)
 
         for i in range(len(hashed_hand) - 1):
-            if hashed_hand[i] == hashed_hand[i+1] - 1:
-                continue
-            else:
+            if hashed_hand[i] + 1 != hashed_hand[i + 1]:
                 return False
-            
         return True
+    
+    def rank_hand(self, cards):
+        """Evaluate a 5-card poker hand and return ranking tuple for comparison"""
+        values_map = {
+            "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
+            "8": 8, "9": 9, "10": 10,
+            "Jack": 11, "Queen": 12, "King": 13, "Ace": 14
+        }
 
+        values = sorted([values_map[c.value] for c in cards], reverse=True)
+        suits = [c.suit for c in cards]
 
-    def sort_hands(self):
-        hands = {'sf': [], '4ok': [], 'fh': [], 'f': [], 's': [], '3ok': [], '2p': [], '1p': [], 'hc': []}
-        for player in self.players:
-            player_dup = self.check_duplicates(player)
-            flush = self.check_suits(player)
-            order = self.check_order(player)
+        # Count duplicates
+        counts = {}
+        for v in values:
+            counts[v] = counts.get(v, 0) + 1
+        counts_sorted = sorted(counts.items(), key=lambda x: (-x[1], -x[0]))
 
-            if flush == True and order == True:
-                hands['sf'].append(player.name)
-            elif 4 in player_dup.values():
-                hands['4ok'].append(player.name)
-            elif 3 in player_dup.values() and 2 in player_dup.values():
-                hands['fh'].append(player.name)
-            elif flush == True:
-                hands['f'].append(player.name)
-            elif order == True:
-                hands['s'].append(player.name)
-            elif 3 in player_dup.values():
-                hands['3ok'].append(player.name)
-            elif len([pair for pair in player_dup.values() if pair == 2]) == 2:
-                hands['2p'].append(player.name)
-            elif 2 in player_dup.values():
-                hands['1p'].append(player.name)
-            else:
-                hands['hc'].append(player.name)
+        is_flush = len(set(suits)) == 1
+        is_straight = all(values[i] - 1 == values[i+1] for i in range(len(values)-1))
+        
+        # Special Ace-low straight (A,2,3,4,5)
+        if set(values) == {14, 5, 4, 3, 2}:
+            is_straight = True
+            values = [5, 4, 3, 2, 1]
 
-        print(hands)
-        return hands
+        # Straight flush
+        if is_straight and is_flush:
+            return (0, values)  # strongest
+
+        # Four of a kind
+        if counts_sorted[0][1] == 4:
+            return (1, [counts_sorted[0][0], counts_sorted[1][0]])
+
+        # Full house
+        if counts_sorted[0][1] == 3 and counts_sorted[1][1] == 2:
+            return (2, [counts_sorted[0][0], counts_sorted[1][0]])
+
+        # Flush
+        if is_flush:
+            return (3, values)
+
+        # Straight
+        if is_straight:
+            return (4, values)
+
+        # Three of a kind
+        if counts_sorted[0][1] == 3:
+            kickers = [v for v in values if v != counts_sorted[0][0]]
+            return (5, [counts_sorted[0][0]] + kickers)
+
+        # Two pair
+        if counts_sorted[0][1] == 2 and counts_sorted[1][1] == 2:
+            kicker = [v for v in values if v not in (counts_sorted[0][0], counts_sorted[1][0])]
+            return (6, [counts_sorted[0][0], counts_sorted[1][0]] + kicker)
+
+        # One pair
+        if counts_sorted[0][1] == 2:
+            kickers = [v for v in values if v != counts_sorted[0][0]]
+            return (7, [counts_sorted[0][0]] + kickers)
+
+        # High card
+        return (8, values)
+
+    def best_hand(self, player):
+        """Find best 5-card hand from 7 total cards"""
+        all_cards = player.hand[:2] + self.community_cards
+        best = (9, [])  # worse than any real hand
+        best_combo = None
+
+        for combo in itertools.combinations(all_cards, 5):
+            score = self.rank_hand(combo)
+            if score < best:
+                best = score
+                best_combo = combo
+
+        return best, best_combo
+
+    def determine_winner(self, players):
+        """Compare all active players and return the winner(s)"""
+        scores = []
+        for player in players:
+            score, combo = self.best_hand(player)
+            scores.append((score, player, combo))
+
+        scores.sort(key=lambda x: x[0])  # best hand first
+        best_score = scores[0][0]
+        winners = [s for s in scores if s[0] == best_score]
+
+        return winners
 
     def game(self):
         new_round = True
-        while new_round == True:
-            current_players = self.players
+        while new_round:
+            self.reset_round()
+            current_players = self.players[:]
 
             self.deal_hands()
+            for player in current_players:
+                print(f"{player.name} has {player.hand[0]}, {player.hand[1]}")
+
+            # Flop
             self.deal_flop()
+            current_players = self.betting_round(current_players)
 
-            '''for card in self.community_cards:
-                print(card)'''
-            
-            for player in current_players:
-                print(f'{player.name} has {player.hand[0]}, {player.hand[1]}')
-                cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
-                if cmd == 'fold':
-                    self.fold(player.name)
-                    current_players.remove(player)
-                elif cmd == 'call':
-                    amt = int(input('How much would you like to bet? '))
-                    self.bet(player.name, amt)
-                elif cmd == 'raise':
-                    raise_amt = int(input('How much would you like to raise? '))
-                    self.bet(player.name, raise_amt)
-                else:
-                    print('Invalid command. Please enter "fold", "call", or "raise".')
-        
-
+            # Turn
             self.deal_turn()
+            current_players = self.betting_round(current_players)
 
-            for player in current_players:
-                cmd = input(f'{player.name}, what would you like to do? (fold, call, raise): ').strip().lower()
-                if cmd == 'fold':
-                    self.fold(player.name)
-                    current_players.remove(player)
-                elif cmd == 'call':
-                    self.bet(player.name, self.bets[player.name])
-                elif cmd == 'raise':
-                    raise_amt = int(input('How much would you like to raise? '))
-                    self.bet(player.name, self.bets[player.name] + raise_amt)
-                else:
-                    print('Invalid command. Please enter "fold", "call", or "raise".')
-
+            # River
             self.deal_river()
+            current_players = self.betting_round(current_players)
 
-            hands_ranked = self.sort_hands()
+            winners = self.determine_winner(current_players)
+            split_pot = self.pot // len(winners)
 
-            '''Go down the Dict to see who has the highest ranked hand'''
-            for hand in hands_ranked:
-                if len(hands_ranked[hand]) > 0:
-                    '''For each player, give them the pot / num players with highest hand'''
-                    for player_name in hands_ranked[hand]:
-                        for player in self.players:
-                            if player.name == player_name:
-                                cards = [(card.suit, card.value) for card in player.hand]
-                                print(f'{player.name} wins with {cards}')
-                                player.money += sum(self.bets.values()) // len(hands_ranked[hand])
-                    break
-                else:
-                    continue
+            for score, player, combo in winners:
+                player.money += split_pot
+                print(f"{player.name} wins with {', '.join(str(c) for c in combo)}! New balance: {player.money}")
 
-            for player in self.players:
-                print(f'{player.name} has {player.money}')
 
-            new_round = True if input('Play another round? (y/n)') == 'y' else False
+            new_round = input("Play another round? (y/n): ").strip().lower() == "y"
 
-'''TODO: fix betting'''
 
     
 class ChorDaiDi():

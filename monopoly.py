@@ -1,9 +1,38 @@
 import random
 
 board = []
+names = ['pain street', 'horror street', 'spaghetti street']
+
+class Player:
+    def __init__(self):
+        self.money = 2500
+        self.properties = []
+        self.jail = False
+        self.doubles = 0
+
+    def get_properties(self):
+        return self.properties
+    
+    def add_property(self, new_property):
+        self.properties.append(new_property)
+
+    def go_to_jail(self):
+        self.jail = True
+
+    def get_out_of_jail(self):
+        self.jail = False
+
+    def get_doubles(self):
+        return self.doubles
+    
+    def set_doubles(self, amt):
+        self.doubles = amt
+
+    def incr_doubles(self):
+        self.doubles += 1
 
 class Property:
-    def __init__(self, value, rent):
+    def __init__(self, value, rent, name):
         self.value = value
         self.rent = rent
         self.buildings = []
@@ -11,6 +40,12 @@ class Property:
 
     def get_value(self):
         return self.value
+    
+    def set_value(self, amt):
+        self.value += amt
+    
+    def get_owner(self):
+        return self.owner
     
     def set_owner(self, new_owner):
         self.owner = new_owner
@@ -21,6 +56,9 @@ class Property:
     def set_buildings(self,new_building):
         self.buildings.append(new_building)
 
+    def __str__(self):
+        print(self.name + ' ' + self.value + ' ' + self.rent)
+
 def d6():
     return random.randint(1, 6)
 
@@ -29,6 +67,19 @@ def chance():
 
 def comm_chest():
     return random.choice(['Go to Jail', 'Gain $100', 'Lose $50'])
+
+def build_board():
+    for i in range(20):
+        if i == 6 or i == 18:
+            board.append(Property(2000, 10, 'railroad'))
+        elif i == 8:
+            board.append('chance')
+        elif i == 9:
+            board.append("go to jail")
+        elif i == 16:
+            board.append('community chest')
+        else:
+            board.append(Property(random.randint(1000, 3000), random.randint(5, 50), random.choice(names)))
 
 def print_board():
     print(board)
@@ -50,9 +101,6 @@ def game():
     num_players = int(input('Please enter the number of players: '))
     score = {}
     win = False
-
-    for _ in range(20):
-        board.append(0)
 
     for i in range(num_players):
         score[i+1] = {'position': 0, 'money': 1500, 'properties': [], 'status': ''}

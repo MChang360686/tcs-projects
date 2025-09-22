@@ -15,7 +15,7 @@ class person{
         return hunger;
     }
 
-    private void setHunger(amt){
+    private void setHunger(int amt){
         hunger = hunger + amt
         if (hunger > 100){
             hunger = 100;
@@ -24,19 +24,17 @@ class person{
 
     private void getCold(boolean hasClothes){
         if (hasClothes){
-            ;
+            cold = false;
         } else{
             cold = true;
         }
     }
 
     private void getSick(){
-        if (hunger < 50 && cold == true){
+        if (hunger < 25 && cold == true){
             sick = true;
         }
     }
-
-
 
     private void kill(){
         alive = false;

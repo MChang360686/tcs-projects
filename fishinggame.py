@@ -57,7 +57,7 @@ def shop(player, player_money):
     elif cmd == 'buy':
         cmd2 = input("Please enter what you'd like to buy(rod, line, bait): ")
     else:
-        
+        pass
             
         
         
