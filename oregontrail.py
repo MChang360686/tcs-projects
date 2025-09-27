@@ -28,12 +28,30 @@ class Player:
         self.tools += amt
  
 def d10():
-    random.randint(1, 10)
+    return random.randint(1, 10)
         
 def river():
-    diff = ['slow', 'fast', 'rapids']
+    diff = ['slow', 'fast', 'rapid']
     river_difficulty = random.randint(0, 2)
+    depth = random.randint(1, 15)
 
+    print('You approach a ' + diff[river_difficulty] + ' river.  It is ' + str(depth) + ' feet deep. What do you want to do? ')
+    print('1. Ford the river')
+    print('2. Caulk your wagon')
+    print('3. Wait for a ferry')
+    action = int(input('4. Wait '))
+
+    if action == 1:
+        if depth >= 3:
+            if d10() <= 4:
+                return True
+            else:
+                return False
+        else:
+            if d10() <= 8:
+                return True
+            else:
+                return False
     
     
         
