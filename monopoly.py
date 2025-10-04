@@ -1,77 +1,77 @@
 import random
 
 board = []
-names = ['pain street', 'horror street', 'spaghetti street']
+names = ['Pain Street', 'Horror Street', 'Spaghetti Street']
 
 class Player:
-    def __init__(self):
-        self.money = 2500
+    def __init__(self, name):
+        self.name = name
+        self.money = 1500
         self.properties = []
+        self.position = 0
         self.jail = False
         self.doubles = 0
 
-    def get_properties(self):
-        return self.properties
-    
-    def add_property(self, new_property):
-        self.properties.append(new_property)
+    def move(self, steps):
+        self.position = (self.position + steps) % len(board)
+        if self.position < steps:  # wrapped around, passed GO
+            self.money += 200
+            print(f"{self.name} passed GO! +$200")
 
-    def go_to_jail(self):
-        self.jail = True
+    def pay(self, amount, other=None):
+        self.money -= amount
+        if other:
+            other.money += amount
+        print(f"{self.name} paid ${amount} {'to ' + other.name if other else ''}")
 
-    def get_out_of_jail(self):
-        self.jail = False
+    def add_property(self, prop):
+        self.properties.append(prop)
 
-    def get_doubles(self):
-        return self.doubles
-    
-    def set_doubles(self, amt):
-        self.doubles = amt
-
-    def incr_doubles(self):
-        self.doubles += 1
+    def __str__(self):
+        return f"{self.name}: ${self.money}, Props: {[p.name for p in self.properties]}"
 
 class Property:
     def __init__(self, value, rent, name):
         self.value = value
         self.rent = rent
-        self.buildings = []
-        self.owner = ''
-
-    def get_value(self):
-        return self.value
-    
-    def set_value(self, amt):
-        self.value += amt
-    
-    def get_owner(self):
-        return self.owner
-    
-    def set_owner(self, new_owner):
-        self.owner = new_owner
-
-    def get_buildings(self):
-        return self.buildings
-
-    def set_buildings(self,new_building):
-        self.buildings.append(new_building)
+        self.name = name
+        self.owner = None
 
     def __str__(self):
-        print(self.name + ' ' + self.value + ' ' + self.rent)
+        return f"{self.name} (Cost: {self.value}, Rent: {self.rent}, Owner: {self.owner.name if self.owner else 'None'})"
 
 def d6():
     return random.randint(1, 6)
 
-def chance():
-    return random.choice(['Get $100', 'Go to Go', 'Go to Jail', 'Get out of jail free'])
+def chance(player):
+    card = random.choice(['Get $100', 'Go to GO', 'Go to Jail', 'Get out of jail free'])
+    print(f"{player.name} drew Chance: {card}")
+    if card == 'Get $100':
+        player.money += 100
+    elif card == 'Go to GO':
+        player.position = 0
+        player.money += 200
+    elif card == 'Go to Jail':
+        player.jail = True
+        player.position = 9
+    elif card == 'Get out of jail free':
+        player.jail = False
 
-def comm_chest():
-    return random.choice(['Go to Jail', 'Gain $100', 'Lose $50'])
+def comm_chest(player):
+    card = random.choice(['Go to Jail', 'Gain $100', 'Lose $50'])
+    print(f"{player.name} drew Community Chest: {card}")
+    if card == 'Go to Jail':
+        player.jail = True
+        player.position = 9
+    elif card == 'Gain $100':
+        player.money += 100
+    elif card == 'Lose $50':
+        player.money -= 50
 
 def build_board():
     for i in range(20):
         if i == 6 or i == 18:
-            board.append(Property(2000, 10, 'railroad'))
+            board.append(Property(2000, 100, 'Railroad'))
         elif i == 8:
             board.append('chance')
         elif i == 9:
@@ -79,79 +79,59 @@ def build_board():
         elif i == 16:
             board.append('community chest')
         else:
-            board.append(Property(random.randint(1000, 3000), random.randint(5, 50), random.choice(names)))
-
-def print_board():
-    print(board)
-
-def check_pass_go(num):
-    if num >= 20:
-        return True
-    else:
-        return False
-    
-def buy(money_available, price):
-    decision = input("Buy Property? (y/n)")
-    if decision == 'y' and money_available >= price:
-        return True
-    else:
-        return False
+            board.append(Property(random.randint(100, 300), random.randint(10, 50), random.choice(names)))
 
 def game():
-    num_players = int(input('Please enter the number of players: '))
-    score = {}
-    win = False
+    build_board()
+    num_players = int(input('Number of players: '))
+    players = [Player(f"Player {i+1}") for i in range(num_players)]
 
-    for i in range(num_players):
-        score[i+1] = {'position': 0, 'money': 1500, 'properties': [], 'status': ''}
+    while len(players) > 1:
+        for player in players[:]:
+            if player.money <= 0:
+                print(f"{player.name} is bankrupt! Removed from game.")
+                players.remove(player)
+                continue
 
-    while win == False:
-        for i in range(num_players):
-            print('Player ' + str(i+1) + "'s turn")
-            doubles = 0
+            print(f"\n--- {player.name}'s Turn ---")
+            d1, d2 = d6(), d6()
+            print(f"Rolled {d1} and {d2}")
+            player.move(d1 + d2)
 
-            while doubles < 3:
-                d1 = d6()
-                d2 = d6()
-                
-                if d1 == d2:
-                    doubles += 1
-                    if doubles > 2:
-                        print("go to jail")
-                        break
+            tile = board[player.position]
+            print(f"{player.name} landed on {tile}")
 
-                    score[i+1]['position'] += d1 + d2
-                    position = score[i+1]['position']
-                    if check_pass_go(score[i+1]['position']):
-                        # check if we passed go and wrap around
-                        score[i+1]['position'] = score[i+1]['position'] % 20
-                        score[i+1]['money'] += 200
+            if isinstance(tile, Property):
+                if tile.owner is None:
+                    decision = input(f"Do you want to buy {tile.name} for ${tile.value}? (y/n): ")
+                    if decision == 'y' and player.money >= tile.value:
+                        player.pay(tile.value)
+                        tile.owner = player
+                        player.add_property(tile)
+                elif tile.owner != player:
+                    player.pay(tile.rent, tile.owner)
 
-                    if position == 9 or position == 19:
-                        score[i+1]['money'] -= 100
-                    elif position == 5 or position == 10 or position == 15:
-                        return 'rail road'
-                    elif position == 8:
-                        card = chance()
-                    elif position == 16:
-                        card = comm_chest()
-                    else:
-                        return 'property'
+            elif tile == "go to jail":
+                player.jail = True
+                player.position = 9
+                print(f"{player.name} goes to Jail!")
 
-                
+            elif tile == "chance":
+                chance(player)
 
-                if d1 != d2:
-                    break
+            elif tile == "community chest":
+                comm_chest(player)
 
-            
+            print(player)
 
-            # remove player if they have no money
-            if score[i+1]['money'] < 1:
-                score.pop(i+1)
+            # check bankruptcy
+            if player.money <= 0:
+                print(f"{player.name} went bankrupt!")
+                players.remove(player)
 
-            if len(score) < 2:
-                print("Game End")
+            if len(players) == 1:
                 break
 
-        break
-    print(score)
+    print(f"\n🏆 {players[0].name} wins with ${players[0].money}!")
+
+game()

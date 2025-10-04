@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Satesh")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c8da800e44540e72b8d92629db85aed7aae8a9e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+abdcece6c8ded2bd2d94df18744d99c06b994bac")]
 [assembly: System.Reflection.AssemblyProductAttribute("Satesh")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Satesh")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

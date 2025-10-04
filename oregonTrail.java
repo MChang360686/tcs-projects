@@ -11,12 +11,12 @@ class person{
         this.name = name;
     }
 
-    private void getHunger(){
+    private Integer getHunger(){
         return hunger;
     }
 
     private void setHunger(int amt){
-        hunger = hunger + amt
+        hunger = hunger + amt;
         if (hunger > 100){
             hunger = 100;
         }
@@ -87,5 +87,5 @@ class party{
 
 public class oregonTrail{
     Scanner scan = new Scanner(System.in);
-    party p = new party()
+    party p = new party("chungus", "!chungus", "small chungus", "dischungus", "bob");
 }
