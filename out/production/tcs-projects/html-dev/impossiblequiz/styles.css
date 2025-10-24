@@ -1,0 +1,23 @@
+h3 {
+    display: inline;
+}
+
+#gameover {
+    display: none;
+}
+
+#help {
+    display: none;
+}
+
+#q2 {
+    display: none;
+}
+
+#q3 {
+    display: none;
+}
+
+#win {
+    display: none;
+}

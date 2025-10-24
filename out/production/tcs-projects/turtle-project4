@@ -1,0 +1,28 @@
+import turtle
+
+def draw_flower():
+    t = turtle.Turtle()
+    scr = turtle.Screen()
+    scr.bgcolor("black")
+    t.color("red")
+    t.shape("turtle")
+    t.speed(2)
+
+    for i in range(0, 36):
+        t.forward(100)
+        t.right(45)
+        t.forward(100)
+        t.right(135)
+        t.forward(100)
+        t.right(45)
+        t.forward(100)
+        t.right(135)
+
+        t.right(10)
+
+    scr.mainloop()
+
+
+draw_flower()
+
+turtle.done()
