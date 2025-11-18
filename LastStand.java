@@ -9,6 +9,7 @@ class Player {
     Integer hp, stamina;
     Integer str, end, pre, inte, luc = 0;
     Integer food, rest = 100;
+
     public Player() {
         Scanner constrScanner = new Scanner(System.in);
         System.out.println("Choose a preset?(y/n) ");
@@ -62,8 +63,65 @@ class Player {
     }
 }
 
+class Zombie {
+    double hp = 0;
+    double dmg = 0;
+    int speed = 0;
+    int armor = 0;
+    String type = "";
+    Random r = new Random();
+
+    public Zombie(String type) {
+        if (type.equals("")) {
+            hp = r.nextInt(25);
+            dmg = 5.0;
+            speed = 2;
+        } else if (type.equals("fat")) {
+            hp = r.nextInt(50);
+            dmg = 5.0;
+            speed = 1;
+        } else if (type.equals("police")) {
+            hp = r.nextInt(40);
+            dmg = 6.0;
+            speed = 2;
+            armor = 15;
+        } else if (type.equals("military")) {
+            hp = r.nextInt(50);
+            dmg = 8.0;
+            speed = 3;
+            armor = 25;
+        } else if (type.equals("kid")) {
+            hp = r.nextInt(15);
+            dmg = 3.0;
+            speed = 6;
+        } else {
+            hp = r.nextInt(25);
+            dmg = 5.0;
+            speed = 2;
+        }
+    }
+
+    public double getHp() {
+        return hp;
+    }
+
+    public void setHp(double amt) {
+        hp = (amt > hp) ? 0 : hp - amt;
+    }
+
+    public double getDmg() {
+        return dmg;
+    }
+
+    public void setDmg(double amt) {
+        dmg = dmg + amt;
+    }
+
+
+}
+
 public class LastStand {
-    public static void Main(String[] args) {
+    public static void main(String[] args) {
 
     }
 }
