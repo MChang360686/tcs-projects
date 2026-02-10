@@ -60,6 +60,34 @@ class Player {
                 }
             }
         }
+        constrScanner.close();
+
+        hp = (2 * end) + str;
+        stamina = end + str + 5;
+    }
+
+    public Integer getHp() {
+        return hp;
+    }
+
+    public Integer getSta() {
+        return stamina;
+    }
+
+    public void setHp(Integer amt) {
+        if ((hp - amt) < 1) {
+            hp = 0;
+        } else {
+            hp = hp - amt;
+        }
+    }
+
+    public void setSta(Integer amt) {
+        if ((stamina - amt) < 1) {
+            stamina = 0;
+        } else {
+            stamina = stamina - amt;
+        }
     }
 }
 
@@ -117,11 +145,200 @@ class Zombie {
         dmg = dmg + amt;
     }
 
+    public int getSpd() {
+        return speed;
+    }
+
+    public void setSpd(int amt) {
+        speed = speed + amt;
+    }
+
+    public int getArm() {
+        return armor;
+    }
+
+    public void setArm(int amt) {
+        armor = armor + amt;
+    }
+
+}
+
+class Weapon {
+    String name;
+    double dmg;
+    int weight;
+    int range;
+    int capacity;
+    int ammo;
+
+    public Weapon(String name, double dmg, int wt, int rng, int cap, int amm) {
+        this.name = name;
+        this.dmg = dmg;
+        weight = wt;
+        range = rng;
+        capacity = cap;
+        ammo = amm;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getDmg() {
+        return dmg;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getAmmo() {
+        return ammo;
+    }
+
+    public void reload(Integer newAmmo) {
+        ammo = newAmmo;
+    }
 
 }
 
 public class LastStand {
     public static void main(String[] args) {
+        Player p = new Player();
+        Integer distance = 500, supplies = 30, money = 250;
+        Scanner scan = new Scanner(System.in);
+        Random r = new Random();
+        Weapon w1 = new Weapon("tire iron", 5.0, 5, 1, 0, 0);
+        Weapon w2 = new Weapon("taurus revolver", 15.0, 3, 10, 5, 15);
+        Weapon selectedWeapon = w1;
 
+        for (int i = 0; i < distance; i += Math.floor((p.str + p.end) / 2)) {
+            String cmd = scan.nextLine();
+            System.out.println("What do you want to do? ");
+            System.out.println("0. travel \n1. search \n2. fight zombies \n3. shop");
+
+            switch (cmd) {
+                case "0":
+                    break;
+                case "1":
+                    Integer encounter = r.nextInt(101);
+                    if (encounter < 75) {
+                        Integer supp = r.nextInt(6) + 1;
+                        System.out.println("You find" + supp.toString() + " supplies ");
+
+                    } else {
+                        String[] types = {"", "fat", "police", "military", "kid"};
+                        Zombie z = new Zombie(types[r.nextInt(types.length)]);
+                        Integer fightDistance = r.nextInt(10) + 1;
+                        while (z.getHp() > 0) {
+                            // fight until zombie is dead
+                            System.out.println("Choose an action (0-4): ");
+                            Integer act = scan.nextInt();
+                            switch (act) {
+                                case 0:
+                                    //attack
+                                    z.setHp(selectedWeapon.getDmg() - z.getArm());
+                                    if ((p.getHp() - z.getDmg()) < 1) {
+                                        System.out.print("You Died");
+                                        break;
+                                    } else {
+                                        p.setHp((int) Math.ceil(z.getDmg()));
+                                    }
+                                    break;
+                                case 1:
+                                    //reload
+                                    if (selectedWeapon.getAmmo() < 1 && selectedWeapon.range > 1) {
+                                        selectedWeapon.reload(selectedWeapon.getCapacity());
+                                    }
+                                    break;
+                                case 2:
+                                    //switch weapons
+                                    if (selectedWeapon == w1) {
+                                        selectedWeapon = w2;
+                                    } else {
+                                        selectedWeapon = w1;
+                                    }
+                                    break;
+                                case 3:
+                                    //move forward
+                                    fightDistance -= 10;
+                                    break;
+                                case 4:
+                                    //move backwards
+                                    fightDistance += 10;
+                                    break;
+                                default:
+                                    //bad input, make player suffer
+                                    System.out.println("Bad input, skipping turn. ");
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+                case "2":
+                    String[] types = {"", "fat", "police", "military", "kid"};
+                    Zombie z = new Zombie(types[r.nextInt(types.length)]);
+                    Integer fightDistance = r.nextInt(10) + 1;
+                    while (z.getHp() > 0) {
+                        // fight until zombie is dead
+                        System.out.println("Choose an action (0-4): ");
+                        Integer act = scan.nextInt();
+                        switch (act) {
+                            case 0:
+                                //attack
+                                z.setHp(selectedWeapon.getDmg() - z.getArm());
+                                if ((p.getHp() - z.getDmg()) < 1) {
+                                    System.out.print("You Died");
+                                    break;
+                                } else {
+                                    p.setHp((int) Math.ceil(z.getDmg()));
+                                }
+                                break;
+                            case 1:
+                                //reload
+                                if (selectedWeapon.getAmmo() < 1 && selectedWeapon.range > 1) {
+                                    selectedWeapon.reload(selectedWeapon.getCapacity());
+                                }
+                                break;
+                            case 2:
+                                //switch weapons
+                                if (selectedWeapon == w1) {
+                                    selectedWeapon = w2;
+                                } else {
+                                    selectedWeapon = w1;
+                                }
+                                break;
+                            case 3:
+                                //move forward
+                                fightDistance -= 10;
+                                break;
+                            case 4:
+                                //move backwards
+                                fightDistance += 10;
+                                break;
+                            default:
+                                //bad input, make player suffer
+                                System.out.println("Bad input, skipping turn. ");
+                                break;
+                        }
+                    }
+                    break;
+                case "3":
+                    HashMap<Integer, Weapon> weapons = new HashMap<Integer, Weapon>();
+                    weapons.put(500, new Weapon("ar15", 50.0, 10, 400, 30, 30));
+                    weapons.forEach((key, value) -> System.out.println("Price: " + key + ", Weapon: " + value.getName()));
+                    break;
+            }
+
+            supplies--;
+        }
     }
 }

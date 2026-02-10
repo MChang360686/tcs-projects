@@ -30,12 +30,9 @@ print(s.stack)
 
 def balanced_parentheses(string):
     s = Stack()
+    print(string)
 
-    str = list(string)
-
-    print(str)
-
-    for p in str:
+    for p in string:
         match(p):
             case "{":
                 s.push(p)

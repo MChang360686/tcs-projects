@@ -63,6 +63,8 @@ def game():
             random_event = encounters()
             if random_event[0] == 'find candy':
                 for piece in candy(d6()):
+                    print('You find some candy on the ground')
+                    print('You got a: ' + piece)
                     candy_received[piece] += 1
             elif random_event[0] == 'cat':
                 print('You see a cat ')
@@ -71,7 +73,7 @@ def game():
                 print('You got hit by a car.  Trick or Treating is over, go home. ')
                 time = 0
                 break
-
+    print('Time is up!')
     print('You got the following candy')
     print(candy_received)
 
