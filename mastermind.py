@@ -12,7 +12,7 @@ def game():
 
     for i in range(0, 8):
         ans = ''
-        guess = list(input("Please enter a 4-digit number"))
+        guess = list(input("Please enter a 4-digit number: "))
         print(guess)
         for i in range(0, 4):
             if int(guess[i]) == hidden_number[i]:

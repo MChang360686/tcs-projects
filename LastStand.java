@@ -334,6 +334,7 @@ public class LastStand {
                 case "3":
                     HashMap<Integer, Weapon> weapons = new HashMap<Integer, Weapon>();
                     weapons.put(500, new Weapon("ar15", 50.0, 10, 400, 30, 30));
+                    weapons.put(350, new Weapon("Fire Axe", 30.0, 8, 1, 0, 0));
                     weapons.forEach((key, value) -> System.out.println("Price: " + key + ", Weapon: " + value.getName()));
                     break;
             }

@@ -13,7 +13,7 @@ class Queue:
         return self.queue[0]
     
     def rear(self):
-        return self.queue[len(self.queue) - 1]
+        return self.queue[-1]
     
 q = Queue()
 

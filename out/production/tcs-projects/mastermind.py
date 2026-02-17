@@ -1,14 +1,9 @@
 import random
 
-nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-
-def get_random(list):
-    return random.choice(list)
-
 def opp_num():
     num = []
     for i in range(0, 4):
-        num.append(get_random(nums))
+        num.append(random.randint(0, 9))
     return num
 
 def game():
