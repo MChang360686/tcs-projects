@@ -12,28 +12,50 @@ class Node:
         else:
             return None
         
+    def add_child(self, new_child: 'Node') -> None:
+        self.children.append(new_child)
+
+    def rem_child(self, child: 'Node') -> None:
+        if child in self.get_children():
+            self.children.remove(child)
+        else:
+            return None
+        
     def __str__(self) -> str:
         return f'{self.value}'
     
 class Tree:
     def __init__(self, root):
         self.root = Node(root)
+        self.nodes = []
         self.height = 1
 
     def add_node(self, parent: Node, value: int) -> None:
-        parent.children.append(Node(value))
+        self.nodes.append(value)
+        parent.add_child(Node(value))
 
-    def delete_node(self, parent: Node, child: Node) -> str| None:
-        if child in parent.get_children():
-            parent.children.remove(child)
+    def delete_node(self, parent: Node, child: Node) -> None:
+        parent.rem_child(child)
+        
+    def is_empty(self) -> bool:
+        return True if self.root != None else False
+
+    def bfs(self, curr: Node) -> None | list:
+        if curr.get_children() == None:
+            return
         else:
-            return 'child does not exist'
+            return [ self.bfs(child) for child in curr.get_children() ]
+        
+class BinaryTree:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        
+n = Node(1)
+n2 = Node(2)
+n3 = Node(3)
+t = Tree(5)
 
-t = Tree(2)
-t.add_node(t.root, 5)
-t.add_node(t.root.children[0], 8)
-print(t.root, t.root.get_children())
-print(t.root.children[0], t.root.children[0].get_children())
-print(t.delete_node(t.root.children[0], t.root.children[0].children[0]))
-print(t.root, t.root.get_children())
-print(t.root.children[0], t.root.children[0].get_children())
+
+
