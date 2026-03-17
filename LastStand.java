@@ -10,10 +10,9 @@ class Player {
     Integer str, end, pre, inte, luc = 0;
     Integer food, rest = 100;
 
-    public Player() {
-        Scanner constrScanner = new Scanner(System.in);
+    public Player(Scanner scan) {
         System.out.println("Choose a preset?(y/n) ");
-        String choice = constrScanner.nextLine();
+        String choice = scan.nextLine();
         if (choice.equals("y")) {
             HashMap<String, List<Integer>> presets = new HashMap<>();
 
@@ -26,7 +25,7 @@ class Player {
                 System.out.println(key);
             }
             System.out.println("Type a preset to choose: ");
-            List<Integer> stats = presets.get(constrScanner.nextLine());
+            List<Integer> stats = presets.get(scan.nextLine());
             str = stats.get(0);
             end = stats.get(1);
             luc = stats.get(4);
@@ -38,7 +37,7 @@ class Player {
 
             for (int i = 0; i < 25; i++) {
                 System.out.println("Type a stat name to allocate a point to: ");
-                String statName = constrScanner.nextLine();
+                String statName = scan.nextLine();
                 switch (statName) {
                     case "str":
                         str++;
@@ -60,7 +59,6 @@ class Player {
                 }
             }
         }
-        constrScanner.close();
 
         hp = (2 * end) + str;
         stamina = end + str + 5;
@@ -72,6 +70,10 @@ class Player {
 
     public Integer getSta() {
         return stamina;
+    }
+
+    public Integer getEnd() {
+        return end;
     }
 
     public void setHp(Integer amt) {
@@ -212,9 +214,9 @@ class Weapon {
 
 public class LastStand {
     public static void main(String[] args) {
-        Player p = new Player();
-        Integer distance = 500, supplies = 30, money = 250;
         Scanner scan = new Scanner(System.in);
+        Player p = new Player(scan);
+        Integer distance = 500, supplies = 30, money = 250;
         Random r = new Random();
         Weapon w1 = new Weapon("tire iron", 5.0, 5, 1, 0, 0);
         Weapon w2 = new Weapon("taurus revolver", 15.0, 3, 10, 5, 15);
@@ -227,6 +229,8 @@ public class LastStand {
 
             switch (cmd) {
                 case "0":
+                    distance = distance - 2 * p.getEnd();
+                    System.out.println("Traveled " + 2 * p.getEnd());
                     break;
                 case "1":
                     Integer encounter = r.nextInt(101);
@@ -341,5 +345,7 @@ public class LastStand {
 
             supplies--;
         }
+        System.out.println("You made it to Union City!  Have fun, the boats are NOT leaving");
+        scan.close();
     }
 }

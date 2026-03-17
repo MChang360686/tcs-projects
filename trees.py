@@ -59,3 +59,34 @@ t = Tree(5)
 
 
 
+'''class Node:
+    def __init__(self, x):
+        self.data = x
+        self.children = []
+        
+    def get_children(self) -> list:
+        return self.children
+        
+    def add_child(self, child: 'Node') -> None:
+        self.children.append(child)
+        
+    def __str__(self) -> str:
+        return f'value: {self.data} children: {self.children}'
+        
+def print_parents(parent: Node, child: Node) -> None:
+    if parent is None:
+        print(str(child.data) + " -> NULL")
+    else:
+        print(str(child.data) + ' -> ' + str(parent.data))
+        
+    for children in child.get_children():
+        print_parents(child, children)
+        
+n = Node(1)
+n1 = Node(46)
+n2 = Node(3)
+n2.add_child(n)
+n.add_child(n1)
+print_parents(n2, n)
+        '''
+    
